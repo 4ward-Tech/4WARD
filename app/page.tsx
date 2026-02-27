@@ -1,6 +1,6 @@
 import Image from "next/image";
-import AboutCarousel from "./components/AboutCarousel";
 import Services from "./components/Services";
+import Journey from "./components/Journey";
 import FeaturedProjects from "./components/FeaturedProjects";
 
 export default function Home() {
@@ -142,9 +142,8 @@ export default function Home() {
       </div>
 
       <Services />
+      <Journey />
       <FeaturedProjects />
-
-      <AboutCarousel />
     </main>
   );
 }
