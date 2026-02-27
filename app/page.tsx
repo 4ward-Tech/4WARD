@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AboutCarousel from "./components/AboutCarousel";
+import Services from "./components/Services";
 
 export default function Home() {
   return (
@@ -106,10 +107,10 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom Typography Section - Raised to Front */}
-        <div className="relative mt-auto z-50 animate-push-down-text delay-push">
-          <h1 className="flex flex-col select-none">
-            <span className="text-[8rem] md:text-[14rem] font-black leading-[0.7] tracking-tighter uppercase flex">
+        {/* Middle Typography Section - Centered Vertically and Horizontally */}
+        <div className="relative flex-1 z-50 animate-push-down-text delay-push flex items-center justify-center w-full">
+          <h1 className="flex flex-col select-none items-center text-center">
+            <span className="text-[5rem] md:text-[9rem] font-black leading-[0.7] tracking-tighter uppercase flex justify-center">
               {"4WARD".split("").map((char, i) => (
                 <span
                   key={i}
@@ -123,32 +124,6 @@ export default function Home() {
                 </span>
               ))}
             </span>
-            <div className="relative ml-[22%]">
-              <span className="text-[10rem] md:text-[16rem] font-black leading-[0.8] tracking-tighter text-outline block group uppercase flex">
-                {"Folio".split("").map((char, i) => (
-                  <span
-                    key={i}
-                    className="animate-letter-in"
-                    style={{ animationDelay: `${(i + 5) * 0.2}s` }}
-                  >
-                    {char}
-                  </span>
-                ))}
-                {/* Node Indicators on "folio" text */}
-                <div className="absolute top-[10%] left-0 w-4 h-4 border-2 border-[#d32f2f] bg-white -translate-x-1/2 rounded-none" />
-                <div className="absolute top-[15%] left-1/4 w-3 h-3 bg-black rounded-full" />
-                <div className="absolute top-1/2 right-1/2 w-4 h-4 border-2 border-black bg-white -translate-y-1/2 rounded-none" />
-                <div className="absolute top-1/2 right-[15%] w-3 h-3 bg-[#d32f2f] rounded-full" />
-                <div className="absolute bottom-[10%] right-[5%] w-4 h-4 border-2 border-black bg-white translate-x-1/2 translate-y-1/2" />
-
-                {/* Red Scribble Accent (Bottom Right) */}
-                <div className="absolute -bottom-10 -right-20 opacity-80 scale-150">
-                  <svg width="60" height="40" viewBox="0 0 60 40">
-                    <path d="M10 5L50 35M20 5L60 35" stroke="#d32f2f" strokeWidth="2" />
-                  </svg>
-                </div>
-              </span>
-            </div>
           </h1>
         </div>
 
@@ -164,6 +139,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <Services />
 
       <AboutCarousel />
     </main>
