@@ -126,6 +126,32 @@
   --animate-content-scale-in: contentScaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-pop-up-in: popUpIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-pop-up-out: popUpOut 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-tilt-float: tiltFloat 6s ease-in-out infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes tiltFloat {
+
+    0%,
+    100% {
+      transform: translateY(0) rotate(-15deg);
+    }
+
+    50% {
+      transform: translateY(-15px) rotate(-12deg);
+    }
+  }
 }
 
 /* Base Styles */

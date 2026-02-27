@@ -1,63 +1,40 @@
 "use client";
 
-// Row 2 is rendered with `flex-row-reverse` so service 08 sits on the far
-// right, directly beneath the vertical bridge that drops from service 04.
-
 const services = [
     {
         number: "01",
-        title: "Branding Identity",
-        description:
-            "Crafting cohesive visual identities — logos, typography, color palettes and brand guidelines that make a lasting impression.",
+        title: "Branding",
+        description: "Crafting cohesive visual identities — logos, typography, and guidelines that make a lasting impression.",
         accentColor: "#d32f2f",
     },
     {
         number: "02",
         title: "Video Making",
-        description:
-            "Full-cycle video production: concept to cut. Cinematic storytelling, motion graphics, and post-production that captivates.",
+        description: "Full-cycle production: cinematic storytelling, motion graphics, and post-production that captivates.",
         accentColor: "#1a1a1a",
     },
     {
         number: "03",
-        title: "3D Modeling & Interactive",
-        description:
-            "Immersive 3D assets, product visualisations, and interactive web experiences powered by real-time rendering.",
+        title: "3D & Interactive",
+        description: "Immersive 3D assets, product visualisations, and interactive web experiences with real-time rendering.",
         accentColor: "#d32f2f",
     },
     {
         number: "04",
-        title: "Software Development",
-        description:
-            "Scalable, performance-first apps — clean architecture, modern frameworks, pixel-perfect interfaces.",
+        title: "Photography",
+        description: "Editorial, commercial, and event photography expertly composed with light-precise imagery.",
         accentColor: "#1a1a1a",
     },
     {
         number: "05",
-        title: "Photography",
-        description:
-            "Editorial, commercial, and event photography that tells your story through expertly composed, light-precise imagery.",
+        title: "Development",
+        description: "Scalable apps — clean architecture, modern frameworks, and pixel-perfect interfaces.",
         accentColor: "#d32f2f",
     },
     {
         number: "06",
-        title: "Social Media Content",
-        description:
-            "Scroll-stopping short-form content, reels, and platform-native campaigns designed to grow your digital presence.",
-        accentColor: "#1a1a1a",
-    },
-    {
-        number: "07",
-        title: "UI / UX Design",
-        description:
-            "Research-driven wireframes and high-fidelity prototypes that convert visitors into users through intuitive flows.",
-        accentColor: "#d32f2f",
-    },
-    {
-        number: "08",
         title: "Color Grading",
-        description:
-            "Professional DaVinci Resolve color grading that sets the mood, consistency, and cinematic tone for your visuals.",
+        description: "Professional grading that sets the mood, consistency, and cinematic tone for your visuals.",
         accentColor: "#1a1a1a",
     },
 ];
@@ -67,18 +44,10 @@ const ServiceIcons: React.ReactNode[] = [
     <svg key="01" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /><line x1="2" y1="12" x2="22" y2="12" /></svg>,
     <svg key="02" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>,
     <svg key="03" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>,
-    <svg key="04" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>,
-    <svg key="05" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" /></svg>,
-    <svg key="06" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>,
-    <svg key="07" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M9 21V9" /></svg>,
-    <svg key="08" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="10.5" r="2.5" /><circle cx="8.5" cy="7.5" r="2.5" /><circle cx="6.5" cy="12.5" r="2.5" /><path d="M12 22c-4.97 0-9-2.69-9-6 0-1.5 1.34-2.87 3.5-3.84" /></svg>,
+    <svg key="04" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" /></svg>,
+    <svg key="05" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>,
+    <svg key="06" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="10.5" r="2.5" /><circle cx="8.5" cy="7.5" r="2.5" /><circle cx="6.5" cy="12.5" r="2.5" /><path d="M12 22c-4.97 0-9-2.69-9-6 0-1.5 1.34-2.87 3.5-3.84" /></svg>,
 ];
-
-// Row 1 (01-04): above / below / above / below
-const row1Positions = ["above", "below", "above", "below"] as const;
-// Row 2 (05-08), flex-row-reversed visually → 08|07|06|05 left-to-right
-// So positions for 05,06,07,08 in original array order:
-const row2Positions = ["above", "below", "above", "below"] as const;
 
 export default function Services() {
     const CARD_H = 190; // px - height of card slot area
@@ -106,19 +75,18 @@ export default function Services() {
                 </div>
             </div>
 
-            {/* ══════════ SNAKE TIMELINE ══════════ */}
+            {/* ══════════ SINGLE LINE TIMELINE ══════════ */}
             <div className="relative">
-
-                {/* ── ROW 1: 01 → 04 ── */}
                 <div className="relative w-full">
                     {/* Spine */}
                     <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#1a1a1a] z-0" />
-                    {/* Left end cap */}
+                    {/* End caps */}
                     <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1a1a1a] z-10" />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1a1a1a] z-10" />
 
-                    <div className="relative grid grid-cols-4 gap-0">
-                        {services.slice(0, 4).map((svc, i) => {
-                            const isAbove = row1Positions[i] === "above";
+                    <div className="relative grid grid-cols-2 md:grid-cols-6 gap-0">
+                        {services.map((svc, i) => {
+                            const isAbove = i % 2 === 0;
                             return (
                                 <div key={svc.number} className="relative flex flex-col items-center">
                                     <CardSlot svc={svc} icon={ServiceIcons[i]} position="above" visible={isAbove} cardH={CARD_H} />
@@ -129,45 +97,9 @@ export default function Services() {
                         })}
                     </div>
                 </div>
-
-                {/* ── VERTICAL BRIDGE ──
-                    Connects the node of service 04 (far right of row 1) 
-                    down to the node of service 08 (far right of row 2).
-                    Nodes are centered in their columns (1/8th of width from right edge).
-                */}
-                <div className="relative h-[60px] w-full">
-                    <div
-                        className="absolute top-0 bottom-0 w-[2px] bg-[#1a1a1a]"
-                        style={{ right: "12.5%", transform: "translateX(1px)" }}
-                    />
-                </div>
-
-                {/* ── ROW 2: flex-row-reverse so 08 sits on the far right ── */}
-                <div className="relative w-full">
-                    {/* Spine */}
-                    <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#1a1a1a] z-0" />
-                    {/* Left end cap (snake terminates at 05 on the left) */}
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1a1a1a] z-10" />
-
-                    {/* flex-row-reverse: renders 05 06 07 08 → displayed as 08 07 06 05  */}
-                    <div className="relative flex flex-row-reverse">
-                        {services.slice(4, 8).map((svc, i) => {
-                            const isAbove = row2Positions[i] === "above";
-                            return (
-                                <div key={svc.number} className="relative flex flex-col items-center flex-1">
-                                    <CardSlot svc={svc} icon={ServiceIcons[4 + i]} position="above" visible={isAbove} cardH={CARD_H} />
-                                    <TimelineNode svc={svc} isAbove={isAbove} />
-                                    <CardSlot svc={svc} icon={ServiceIcons[4 + i]} position="below" visible={!isAbove} cardH={CARD_H} />
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-
             </div>
-            {/* ═══════════════════════════════════ */}
 
-            {/* Bottom rule */}
+            {/* ── Bottom rule ── */}
             <div className="mt-16 border-t border-[#1a1a1a]/10 pt-6 flex justify-between items-center">
                 <span className="text-[10px] font-black tracking-[0.3em] uppercase text-[#1a1a1a]/30">
                     4WARD · Portfolio
@@ -192,7 +124,7 @@ function CardSlot({
 }) {
     return (
         <div
-            className={`w-full px-3 flex flex-col ${position === "above" ? "justify-end pb-5" : "justify-start pt-5"} ${!visible ? "invisible pointer-events-none" : ""}`}
+            className={`w-full px-1 flex flex-col ${position === "above" ? "justify-end pb-5" : "justify-start pt-5"} ${!visible ? "invisible pointer-events-none" : ""}`}
             style={{ minHeight: `${cardH}px` }}
         >
             {visible && <ServiceCard svc={svc} icon={icon} />}
@@ -205,26 +137,11 @@ function TimelineNode({ svc, isAbove }: { svc: (typeof services)[0]; isAbove: bo
     return (
         <div className="relative flex flex-col items-center z-20">
             <div className="w-[2px] bg-[#1a1a1a]/25" style={{ height: isAbove ? "0" : "22px" }} />
-
-            {!isAbove && (
-                <span className="font-black text-sm leading-none mb-1 select-none" style={{ color: svc.accentColor }}>
-                    {svc.number}
-                </span>
-            )}
-
-            <div
-                className="w-5 h-5 rounded-full border-2 border-white shadow-md flex items-center justify-center"
-                style={{ backgroundColor: svc.accentColor }}
-            >
+            {!isAbove && <span className="font-black text-sm leading-none mb-1 select-none" style={{ color: svc.accentColor }}>{svc.number}</span>}
+            <div className="w-5 h-5 rounded-full border-2 border-white shadow-md flex items-center justify-center" style={{ backgroundColor: svc.accentColor }}>
                 <div className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
-
-            {isAbove && (
-                <span className="font-black text-sm leading-none mt-1 select-none" style={{ color: svc.accentColor }}>
-                    {svc.number}
-                </span>
-            )}
-
+            {isAbove && <span className="font-black text-sm leading-none mt-1 select-none" style={{ color: svc.accentColor }}>{svc.number}</span>}
             <div className="w-[2px] bg-[#1a1a1a]/25" style={{ height: !isAbove ? "0" : "22px" }} />
         </div>
     );

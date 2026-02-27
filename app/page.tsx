@@ -1,6 +1,7 @@
 import Image from "next/image";
 import AboutCarousel from "./components/AboutCarousel";
 import Services from "./components/Services";
+import FeaturedProjects from "./components/FeaturedProjects";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
             </g>
           </svg>
         </div>
+
         {/* Decorative SVGs moving with the push */}
         <div className="animate-push-down-top delay-push absolute inset-0 pointer-events-none">
           <div className="absolute top-10 right-20 opacity-10 w-8 h-8">
@@ -84,12 +86,12 @@ export default function Home() {
           <div className="mt-8 md:mt-32 max-w-sm">
             <div className="border border-dashed border-[#1a1a1a]/40 p-10 relative bg-white/50 backdrop-blur-[1px]">
               <ul className="space-y-3 text-sm font-black tracking-tight uppercase">
-                <li>Branding Identitys</li>
+                <li>Branding Identity</li>
                 <li>Video Making</li>
                 <li>3D Modeling & Interactive</li>
                 <li>Software Development</li>
               </ul>
-              {/* Vision Description - 'The thing that describes it all' */}
+              {/* Vision Description */}
               <div className="mt-8 pt-8 border-t border-[#1a1a1a]/10">
                 <p className="text-[10px] md:text-xs font-bold leading-relaxed tracking-tight text-[#1a1a1a]/60 uppercase italic">
                   Bridging the gap between artistic vision, motion, and full-stack technical infrastructure.
@@ -134,13 +136,13 @@ export default function Home() {
             <span className="text-xs font-black uppercase tracking-tight">4WARD</span>
           </div>
           <div className="w-12 h-12 bg-[#1a1a1a] flex items-center justify-center p-3 shadow-xl">
-            {/* Using vercel.svg as the logomark in bottom right to align with "SVG I gave you" */}
             <Image src="/vercel.svg" alt="Logomark" width={24} height={24} className="invert" />
           </div>
         </div>
       </div>
 
       <Services />
+      <FeaturedProjects />
 
       <AboutCarousel />
     </main>
