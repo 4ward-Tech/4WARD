@@ -6,7 +6,7 @@ import FeaturedProjects from "./components/FeaturedProjects";
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full bg-[#f8f8f8] grid-bg font-jost text-[#1a1a1a] overflow-x-hidden">
-      <div className="relative z-10 p-12 md:p-24 min-h-screen flex flex-col justify-between">
+      <div className="relative z-10 py-12 pr-12 pl-20 md:py-24 md:pr-24 md:pl-40 min-h-screen flex flex-col justify-between">
         {/* Background Red Accents (SVGs) - Moved inside hero container */}
         <div className="absolute top-[20%] right-[15%] w-[400px] animate-fade-in delay-final wait-for-animation pointer-events-none z-0">
           <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">

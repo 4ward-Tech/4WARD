@@ -1,5 +1,8 @@
 "use client";
 
+import React from "react";
+import { motion } from "framer-motion";
+
 const services = [
     {
         number: "01",
@@ -41,127 +44,152 @@ const services = [
 
 /* Inline SVG icons */
 const ServiceIcons: React.ReactNode[] = [
-    <svg key="01" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /><line x1="2" y1="12" x2="22" y2="12" /></svg>,
-    <svg key="02" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>,
-    <svg key="03" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>,
-    <svg key="04" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" /></svg>,
-    <svg key="05" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>,
-    <svg key="06" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="10.5" r="2.5" /><circle cx="8.5" cy="7.5" r="2.5" /><circle cx="6.5" cy="12.5" r="2.5" /><path d="M12 22c-4.97 0-9-2.69-9-6 0-1.5 1.34-2.87 3.5-3.84" /></svg>,
+    <svg key="01" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /><line x1="2" y1="12" x2="22" y2="12" /></svg>,
+    <svg key="02" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>,
+    <svg key="03" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>,
+    <svg key="04" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" /></svg>,
+    <svg key="05" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>,
+    <svg key="06" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="10.5" r="2.5" /><circle cx="8.5" cy="7.5" r="2.5" /><circle cx="6.5" cy="12.5" r="2.5" /><path d="M12 22c-4.97 0-9-2.69-9-6 0-1.5 1.34-2.87 3.5-3.84" /></svg>,
 ];
 
 export default function Services() {
-    const CARD_H = 190; // px - height of card slot area
+    const row1 = services.slice(0, 3);
+    const row2 = services.slice(3, 6);
 
     return (
-        <section className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden pt-32 pb-24 px-12 md:px-32">
-
+        <section id="services" className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden pt-12 pb-48 pr-12 pl-20 md:pr-24 md:pl-40">
+            
             {/* ── Section header ── */}
-            <div className="relative z-10 mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-                <div>
-                    <span className="text-[10px] font-black tracking-[0.3em] text-[#d32f2f] uppercase block mb-2">
-                        What we offer
-                    </span>
-                    <h2 className="text-5xl md:text-7xl font-black uppercase leading-none tracking-tighter">
-                        Our{" "}
-                        <span className="text-outline" style={{ WebkitTextStroke: "2px #1a1a1a" }}>
-                            Services
+            <div className="relative z-10 mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+                <div className="max-w-2xl">
+                    <motion.span 
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-sm font-black tracking-[0.3em] text-[#d32f2f] uppercase block mb-3"
+                    >
+                        Capabilities & Expertise
+                    </motion.span>
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter mb-4"
+                    >
+                        Elevating <br />
+                        <span className="text-outline" style={{ WebkitTextStroke: "1.5px #1a1a1a" }}>
+                            Your Vision
                         </span>
-                    </h2>
-                </div>
-                <div className="hidden md:flex items-center gap-2 opacity-20 select-none">
-                    <span className="text-6xl font-black leading-none">[</span>
-                    <span className="text-xs font-black tracking-widest uppercase rotate-90">scroll</span>
-                    <span className="text-6xl font-black leading-none">]</span>
+                    </motion.h2>
                 </div>
             </div>
 
-            {/* ══════════ SINGLE LINE TIMELINE ══════════ */}
-            <div className="relative">
-                <div className="relative w-full">
-                    {/* Spine */}
-                    <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#1a1a1a] z-0" />
-                    {/* End caps */}
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1a1a1a] z-10" />
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1a1a1a] z-10" />
+            {/* ── Serpentine Pathway ── */}
+            <div className="relative z-10 max-w-6xl mx-auto">
+                
+                {/* Connecting Path SVGs (Desktop only) */}
+                <div className="absolute inset-0 pointer-events-none hidden lg:block overflow-visible">
+                    <svg width="100%" height="100%" viewBox="0 0 1000 600" fill="none" preserveAspectRatio="none">
+                        {/* Row 1 (01 -> 02 -> 03) */}
+                        <motion.path 
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1.5, ease: "easeInOut" }}
+                            viewport={{ once: true }}
+                            d="M166 100h668" stroke="rgba(211,47,47,0.15)" strokeWidth="2" strokeDasharray="6 6" 
+                        />
+                        
+                        {/* Drop (03 -> 04) */}
+                        <motion.path 
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1, delay: 1.2, ease: "easeInOut" }}
+                            viewport={{ once: true }}
+                            d="M834 100c60 0 60 260 0 260" stroke="rgba(211,47,47,0.15)" strokeWidth="2" strokeDasharray="6 6" 
+                        />
 
-                    <div className="relative grid grid-cols-2 md:grid-cols-6 gap-0">
-                        {services.map((svc, i) => {
-                            const isAbove = i % 2 === 0;
-                            return (
-                                <div key={svc.number} className="relative flex flex-col items-center">
-                                    <CardSlot svc={svc} icon={ServiceIcons[i]} position="above" visible={isAbove} cardH={CARD_H} />
-                                    <TimelineNode svc={svc} isAbove={isAbove} />
-                                    <CardSlot svc={svc} icon={ServiceIcons[i]} position="below" visible={!isAbove} cardH={CARD_H} />
-                                </div>
-                            );
-                        })}
+                        {/* Row 2 (04 -> 05 -> 06) */}
+                        <motion.path 
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1.5, delay: 2, ease: "easeInOut" }}
+                            viewport={{ once: true }}
+                            d="M834 360H166" stroke="rgba(211,47,47,0.15)" strokeWidth="2" strokeDasharray="6 6" 
+                        />
+                    </svg>
+                </div>
+
+                {/* Grid Layout */}
+                <div className="flex flex-col gap-20 relative">
+                    {/* Row 1: 01 - 02 - 03 */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0">
+                        {row1.map((svc, i) => (
+                            <div key={svc.number} className="flex justify-center">
+                                <ServiceCard svc={svc} icon={ServiceIcons[i]} index={i} />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Row 2: 06 - 05 - 04 (Snake visual order) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0">
+                        {[row2[2], row2[1], row2[0]].map((svc, i) => (
+                            <div key={svc.number} className="flex justify-center">
+                                <ServiceCard 
+                                    svc={svc} 
+                                    icon={ServiceIcons[parseInt(svc.number) - 1]} 
+                                    index={parseInt(svc.number) - 1} 
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
 
-            {/* ── Bottom rule ── */}
-            <div className="mt-16 border-t border-[#1a1a1a]/10 pt-6 flex justify-between items-center">
-                <span className="text-[10px] font-black tracking-[0.3em] uppercase text-[#1a1a1a]/30">
-                    4WARD · Portfolio
-                </span>
-                <span className="text-[10px] font-black tracking-[0.3em] uppercase text-[#1a1a1a]/30">
-                    {services.length} Services
-                </span>
+            {/* ── Bottom Details ── */}
+            <div className="mt-48 flex flex-col md:flex-row justify-between items-center gap-4 opacity-40 border-t border-[#1a1a1a]/5 pt-8">
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase">Tech-Artistry Collective</span>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase">Core Capabilities / 2024</span>
             </div>
         </section>
     );
 }
 
-/* ── Card slot wrapper ── */
-function CardSlot({
-    svc, icon, position, visible, cardH,
-}: {
-    svc: (typeof services)[0];
-    icon: React.ReactNode;
-    position: "above" | "below";
-    visible: boolean;
-    cardH: number;
-}) {
+function ServiceCard({ svc, icon, index }: { svc: typeof services[0]; icon: React.ReactNode; index: number }) {
     return (
-        <div
-            className={`w-full px-1 flex flex-col ${position === "above" ? "justify-end pb-5" : "justify-start pt-5"} ${!visible ? "invisible pointer-events-none" : ""}`}
-            style={{ minHeight: `${cardH}px` }}
+        <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 + (index % 3) * 0.1, duration: 0.5 }}
+            className="group relative w-full max-w-[200px] bg-white border border-[#1a1a1a]/10 ring-1 ring-[#1a1a1a]/5 p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(211,47,47,0.08)] hover:border-[#d32f2f]/30 transition-all duration-500 rounded-sm z-10"
         >
-            {visible && <ServiceCard svc={svc} icon={icon} />}
-        </div>
-    );
-}
-
-/* ── Timeline node ── */
-function TimelineNode({ svc, isAbove }: { svc: (typeof services)[0]; isAbove: boolean }) {
-    return (
-        <div className="relative flex flex-col items-center z-20">
-            <div className="w-[2px] bg-[#1a1a1a]/25" style={{ height: isAbove ? "0" : "22px" }} />
-            {!isAbove && <span className="font-black text-sm leading-none mb-1 select-none" style={{ color: svc.accentColor }}>{svc.number}</span>}
-            <div className="w-5 h-5 rounded-full border-2 border-white shadow-md flex items-center justify-center" style={{ backgroundColor: svc.accentColor }}>
-                <div className="w-1.5 h-1.5 rounded-full bg-white" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[1px] w-6 h-1 bg-[#d32f2f] opacity-20 group-hover:opacity-100 transition-opacity" />
+            
+            <div className="flex justify-between items-center mb-5">
+                <span className="text-[10px] font-black text-[#1a1a1a]/20 group-hover:text-[#d32f2f] transition-colors tabular-nums uppercase tracking-widest">
+                    {svc.number}
+                </span>
+                <div className="text-[#1a1a1a]/40 group-hover:text-[#1a1a1a] transition-all transform group-hover:scale-110">
+                    {icon}
+                </div>
             </div>
-            {isAbove && <span className="font-black text-sm leading-none mt-1 select-none" style={{ color: svc.accentColor }}>{svc.number}</span>}
-            <div className="w-[2px] bg-[#1a1a1a]/25" style={{ height: !isAbove ? "0" : "22px" }} />
-        </div>
-    );
-}
 
-/* ── Service card ── */
-function ServiceCard({ svc, icon }: { svc: (typeof services)[0]; icon: React.ReactNode }) {
-    return (
-        <div className="group relative border border-[#1a1a1a]/10 bg-white/70 backdrop-blur-sm p-4 hover:border-[#d32f2f]/40 hover:shadow-lg transition-all duration-300 cursor-default">
-            <div className="absolute top-0 left-0 w-3.5 h-3.5" style={{ borderTop: `2px solid ${svc.accentColor}`, borderLeft: `2px solid ${svc.accentColor}` }} />
-            <div className="absolute bottom-0 right-0 w-3.5 h-3.5" style={{ borderBottom: `2px solid ${svc.accentColor}`, borderRight: `2px solid ${svc.accentColor}` }} />
-            <div className="mb-2.5 w-8 h-8 flex items-center justify-center border border-current/20" style={{ color: svc.accentColor }}>
-                {icon}
+            <div className="relative z-10 mb-4">
+                <h3 className="text-[12px] font-black uppercase tracking-tight mb-2 text-[#1a1a1a]">
+                    {svc.title}
+                </h3>
+                <p className="text-[9.5px] leading-relaxed text-[#1a1a1a]/50 group-hover:text-[#1a1a1a]/80 transition-colors line-clamp-3">
+                    {svc.description}
+                </p>
             </div>
-            <h3 className="font-black text-xs uppercase tracking-tight leading-snug mb-1.5 text-[#1a1a1a]">
-                {svc.title}
-            </h3>
-            <p className="text-[10px] leading-relaxed text-[#1a1a1a]/60 font-medium">
-                {svc.description}
-            </p>
-        </div>
+
+            <div className="flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-500">
+                <div className="h-[1px] flex-grow bg-[#d32f2f]/20 mr-2" />
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </div>
+        </motion.div>
     );
 }
