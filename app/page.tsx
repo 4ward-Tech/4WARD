@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Services from "./components/Services";
-import Journey from "./components/Journey";
 import FeaturedProjects from "./components/FeaturedProjects";
 
 export default function Home() {
@@ -142,7 +141,6 @@ export default function Home() {
       </div>
 
       <Services />
-      <Journey />
       <FeaturedProjects />
     </main>
   );

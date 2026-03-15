@@ -2,43 +2,65 @@
 
 import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const projects = [
     {
         id: "01",
         name: "CineFlow",
         subtitle: "Visual Narrative Platform",
-        overview: "CineFlow is an industry-standard color grading and visual storytelling platform designed for high-end cinematic productions. It offers professional tools for directors and colorists to achieve consistency across complex visual narratives.",
+        overview: "An industry-standard color grading and visual storytelling platform for cinematic productions. achieve consistency across complex narratives with professional-grade tools.",
         accentColor: "#d32f2f",
         deviceType: "phone",
         image: "/project-mockup.png",
         tagline: "Visual Excellence",
         mobileLabel: "CineFlow Mobile",
-        mobileSub: "Post-Production Suite"
+        mobileSub: "Post-Production Suite",
+        year: "2024",
+        category: "Cinematography"
     },
     {
         id: "02",
         name: "Planshift",
         subtitle: "3D Architecture & VR Explorer",
-        overview: "Planshift converts flat architectural plans into navigable 3D environments, allowing clients to explore their future homes in VR before construction begins. Experience every detail in immersive virtual reality before the first brick is laid.",
+        overview: "Transform flat architectural plans into navigable 3D environments. Explore future spaces in immersive VR before construction even begins.",
         accentColor: "#d32f2f",
         deviceType: "laptop",
         image: "/planshift-mockup.png",
         tagline: "Spatial Innovation",
         mobileLabel: "Planshift VR",
-        mobileSub: "Architectural Engine"
+        mobileSub: "Architectural Engine",
+        year: "2023",
+        category: "Visualization"
+    },
+    {
+        id: "03",
+        name: "E-Gate",
+        subtitle: "Digital Access Control",
+        overview: "A digital visitor registration system for schools. Digitize visitation with identity verification and secure QR-based entry to improve campus security and efficiency.",
+        accentColor: "#d32f2f",
+        deviceType: "phone",
+        image: "/project-mockup.png",
+        tagline: "Secure Access",
+        mobileLabel: "E-Gate System",
+        mobileSub: "Visitor Verification",
+        year: "2024",
+        category: "Security Tech"
     }
 ];
 
 export default function FeaturedProjects() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [direction, setDirection] = useState(0); // -1 for left, 1 for right
     const project = projects[currentIndex];
 
     const nextProject = useCallback(() => {
+        setDirection(1);
         setCurrentIndex((prev) => (prev + 1) % projects.length);
     }, [projects.length]);
 
     const prevProject = () => {
+        setDirection(-1);
         setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
     };
 
@@ -46,50 +68,95 @@ export default function FeaturedProjects() {
     useEffect(() => {
         const timer = setInterval(() => {
             nextProject();
-        }, 5000); // Switch every 5 seconds
+        }, 8000); 
 
         return () => clearInterval(timer);
-    }, [nextProject, currentIndex]); // Reset timer on manual change or nextProject update
+    }, [nextProject, currentIndex]);
+
+    const variants = {
+        enter: (direction: number) => ({
+            x: direction > 0 ? 100 : -100,
+            opacity: 0,
+            scale: 0.98
+        }),
+        center: {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            transition: {
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.4 },
+                scale: { duration: 0.4 }
+            }
+        },
+        exit: (direction: number) => ({
+            x: direction < 0 ? 100 : -100,
+            opacity: 0,
+            scale: 0.98,
+            transition: {
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.3 }
+            }
+        })
+    };
 
     return (
-        <section className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden py-16 px-12 md:px-32">
+        <section className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden pt-12 pb-48 pr-12 pl-20 md:pr-24 md:pl-40">
             {/* ── Section Header ── */}
-            <div className="relative z-10 mb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-4 animate-pop-up-in">
+            <div className="relative z-50 mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                 <div>
-                    <span className="text-[10px] font-black tracking-[0.3em] text-[#d32f2f] uppercase block mb-2">
-                        Selected Work
-                    </span>
-                    <h2 className="text-5xl md:text-7xl font-black uppercase leading-none tracking-tighter">
-                        Featured{" "}
-                        <span className="text-outline" style={{ WebkitTextStroke: "2px #1a1a1a" }}>
-                            Projects
+                    <motion.div 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-3 mb-3"
+                    >
+                        <div className="w-12 h-[1px] bg-[#d32f2f]" />
+                        <span className="text-xs font-black tracking-[0.4em] text-[#d32f2f] uppercase block">
+                            Portfolio
                         </span>
-                    </h2>
+                    </motion.div>
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-5xl md:text-6xl font-black uppercase leading-[0.85] tracking-tighter"
+                    >
+                        Selected <br />
+                        <span className="text-outline" style={{ WebkitTextStroke: "1.2px #1a1a1a" }}>
+                            Creations
+                        </span>
+                    </motion.h2>
                 </div>
 
                 {/* Carousel Controls */}
                 <div className="flex items-center gap-6">
                     <button
                         onClick={prevProject}
-                        className="group w-12 h-12 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-all duration-300"
+                        className="group w-12 h-12 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center hover:bg-[#d32f2f] hover:border-[#d32f2f] transition-all duration-500"
                     >
-                        <svg className="group-hover:text-white transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className="group-hover:text-white transition-colors" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
                         </svg>
                     </button>
-                    <div className="flex gap-2">
+                    <div className="flex gap-3">
                         {projects.map((_, i) => (
-                            <div
+                            <button
                                 key={i}
-                                className={`h-1.5 transition-all duration-300 rounded-full ${i === currentIndex ? "w-8 bg-[#d32f2f]" : "w-1.5 bg-[#1a1a1a]/20"}`}
+                                onClick={() => {
+                                    setDirection(i > currentIndex ? 1 : -1);
+                                    setCurrentIndex(i);
+                                }}
+                                className={`h-1 transition-all duration-500 rounded-full ${i === currentIndex ? "w-8 bg-[#d32f2f]" : "w-1 bg-[#1a1a1a]/10 hover:bg-[#1a1a1a]/30"}`}
                             />
                         ))}
                     </div>
                     <button
                         onClick={nextProject}
-                        className="group w-12 h-12 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-all duration-300"
+                        className="group w-12 h-12 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center hover:bg-[#d32f2f] hover:border-[#d32f2f] transition-all duration-500"
                     >
-                        <svg className="group-hover:text-white transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className="group-hover:text-white transition-colors" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                         </svg>
                     </button>
@@ -97,113 +164,120 @@ export default function FeaturedProjects() {
             </div>
 
             {/* ── Main Showcase Container ── */}
-            <div key={currentIndex} className="relative w-full min-h-[320px] flex flex-col md:flex-row items-center animate-fade-in transition-all">
+            <div className="relative w-full min-h-[500px] flex items-center">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
+                    <motion.div 
+                        key={currentIndex}
+                        custom={direction}
+                        variants={variants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        className="w-full flex flex-col md:flex-row items-center gap-12 md:gap-0"
+                    >
+                        {/* Left Side: Overview & Numbering */}
+                        <div className="relative z-20 w-full md:w-1/2 flex flex-col items-start pt-10">
+                            <div className="relative">
+                                <span className="text-[8rem] md:text-[10rem] font-black leading-none text-[#1a1a1a]/[0.05] select-none absolute -top-20 -left-6">
+                                    {project.id}
+                                </span>
+                                <div className="relative mt-14">
+                                    <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-6 leading-[0.9] max-w-sm">
+                                        {project.name.substring(0, project.name.length / 2)}<span className="text-[#d32f2f]">{project.name.substring(project.name.length / 2)}</span>
+                                    </h3>
 
-                {/* Left Side: Overview & Numbering */}
-                <div className="relative z-20 w-full md:w-1/2 flex flex-col items-start pt-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                    <div className="relative">
-                        <span className="text-[8rem] md:text-[12rem] font-black leading-none text-[#1a1a1a]/5 select-none absolute -top-20 -left-6">
-                            {project.id}
-                        </span>
-                        <div className="relative mt-14">
-                            <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter mb-4">
-                                Project <span className="text-[#d32f2f]">Overview</span>
-                            </h3>
-
-                            <div className="max-w-sm bg-[#d32f2f] text-white p-6 md:p-8 rounded-[2.5rem] rounded-tr-none shadow-2xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
-                                <div className="absolute inset-0 opacity-10 pointer-events-none grid-bg-white" />
-                                <p className="text-xs md:text-sm leading-relaxed font-medium relative z-10">
-                                    {project.overview}
-                                </p>
-                                <div className="mt-5 flex items-center gap-4 relative z-10">
-                                    <div className="h-0.5 w-12 bg-white/30" />
-                                    <span className="text-[10px] font-bold tracking-widest uppercase opacity-70">
-                                        {project.tagline}
-                                    </span>
+                                    <div className="max-w-md bg-white/40 backdrop-blur-sm border border-[#1a1a1a]/5 p-7 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative overflow-hidden group">
+                                        <div className="absolute top-0 left-0 w-1 h-full bg-[#d32f2f] opacity-20 group-hover:opacity-100 transition-opacity" />
+                                        <p className="text-sm md:text-base leading-relaxed font-bold text-[#1a1a1a]/70 font-jost">
+                                            {project.overview}
+                                        </p>
+                                        <div className="mt-7 flex items-center gap-5 cursor-pointer group/link">
+                                            <div className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-white group-hover/link:bg-[#d32f2f] transition-all duration-500 overflow-hidden relative">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                    <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
+                                                </svg>
+                                            </div>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.2em] group-hover/link:translate-x-1.5 transition-transform duration-500">
+                                                Case Study
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="mt-8 flex items-center gap-6 overflow-hidden">
+                                        <span className="font-mono text-[9px] font-black text-[#1a1a1a]/30 uppercase tracking-[0.2em]">
+                                            Yr / {project.year}
+                                        </span>
+                                        <div className="w-1 h-1 rounded-full bg-[#d32f2f]/30" />
+                                        <span className="font-mono text-[9px] font-black text-[#d32f2f] uppercase tracking-[0.2em]">
+                                            Cat / {project.category}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                {/* Right Side: Device & Name */}
-                <div className="relative w-full md:w-1/2 flex items-center justify-center pt-20 md:pt-0">
-
-                    {/* Large Project Name in Background */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
-                        <h4 className="text-[5rem] md:text-[10rem] font-black text-[#1a1a1a] opacity-[0.03] select-none leading-none tracking-tighter uppercase whitespace-nowrap">
-                            {project.name}
-                        </h4>
-                    </div>
-
-                    {/* Project Title Overlay */}
-                    <div className="absolute right-0 top-1/4 md:top-1/3 z-50 text-right pr-4 md:pr-10">
-                        <h4
-                            className="text-3xl md:text-5xl font-black text-[#1a1a1a] flex items-center justify-end gap-2 leading-tight uppercase"
-                            style={{ textShadow: "0 0 20px rgba(255,255,255,0.8), 0 0 40px white" }}
-                        >
-                            {project.name.substring(0, project.name.length / 2)}<span className="text-[#d32f2f]">{project.name.substring(project.name.length / 2)}</span>
-                            <div className="w-8 h-8 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center bg-white/50 backdrop-blur-sm shadow-sm">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="7" y1="17" x2="17" y2="7" />
-                                    <polyline points="7 7 17 7 17 17" />
-                                </svg>
+                        {/* Right Content Area: Device Mockups */}
+                        <div className="relative w-full md:w-1/2 flex items-center justify-center pt-16 md:pt-0">
+                            {/* Elegant background text overlaying the mockup transition area */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center opacity-[0.04] z-0 select-none pointer-events-none">
+                                <h4 className="text-[14rem] md:text-[16rem] font-black uppercase tracking-tighter leading-none italic">
+                                    {project.id}
+                                </h4>
                             </div>
-                        </h4>
-                        <span className="text-xs md:text-sm font-bold text-[#1a1a1a]/60 tracking-widest uppercase block mt-2 bg-white/20 backdrop-blur-[2px] inline-block px-1">
-                            {project.subtitle}
-                        </span>
-                    </div>
 
-                    {/* Device Mockup */}
-                    <div className="relative z-20 w-full max-w-[420px] flex justify-center">
-                        {project.deviceType === "phone" ? (
-                            <div className="relative animate-float">
-                                <DeviceMockup scale={0.6}>
-                                    <div className="relative w-full h-full bg-[#1a1a1a] overflow-hidden">
-                                        <Image src={project.image} alt={project.name} fill className="object-cover" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-6 flex flex-col justify-end">
-                                            <div className="w-12 h-1 bg-[#d32f2f] mb-4" />
-                                            <h5 className="text-white font-black uppercase text-xl mb-1">{project.mobileLabel}</h5>
-                                            <p className="text-white/60 text-[10px] font-medium uppercase tracking-widest">{project.mobileSub}</p>
+                            <div className="relative z-10 transform translate-x-0 md:translate-x-12 scale-90 md:scale-95">
+                                {project.deviceType === "phone" ? (
+                                    <div className="relative animate-float scale-90 md:scale-95">
+                                        <DeviceMockup scale={0.65}>
+                                            <div className="relative w-full h-full bg-[#1a1a1a] overflow-hidden">
+                                                <Image src={project.image} alt={project.name} fill className="object-cover grayscale brightness-110 contrast-125" />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/98 via-[#1a1a1a]/20 to-transparent p-7 flex flex-col justify-end">
+                                                    <div className="w-14 h-1 bg-[#d32f2f] mb-5 shadow-[0_0_20px_#d32f2f]" />
+                                                    <h5 className="text-white font-black uppercase text-xl mb-1 tabular-nums tracking-tighter leading-none">{project.mobileLabel}</h5>
+                                                    <p className="text-white/30 text-[9px] font-black uppercase tracking-[0.4em]">{project.mobileSub}</p>
+                                                </div>
+                                            </div>
+                                        </DeviceMockup>
+
+                                        {/* Premium Floating Detail */}
+                                        <div className="absolute -bottom-10 -right-10 w-28 md:w-36 z-50 animate-float" style={{ animationDelay: '1s' }}>
+                                            <div className="bg-[#d32f2f] p-6 rounded-[1.5rem] shadow-2xl flex flex-col items-center justify-center transform -rotate-12 border-4 border-white/10 overflow-hidden group">
+                                                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <span className="text-white font-black text-4xl italic tracking-tigh relative z-10">{project.name.charAt(0)}</span>
+                                                <span className="text-white/40 text-[7px] font-black uppercase tracking-widest mt-1 relative z-10">Verify</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </DeviceMockup>
+                                ) : (
+                                    <div className="relative animate-float scale-90 md:scale-95">
+                                        <LaptopMockup scale={0.8}>
+                                            <div className="relative w-full h-full bg-[#1a1a1a] overflow-hidden">
+                                                <Image src={project.image} alt={project.name} fill className="object-cover grayscale brightness-110 contrast-125" />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/98 via-[#1a1a1a]/20 to-transparent p-9 flex flex-col justify-end">
+                                                    <div className="w-14 h-1 bg-[#d32f2f] mb-5 shadow-[0_0_20px_#d32f2f]" />
+                                                    <h5 className="text-white font-black uppercase text-2xl mb-1 tabular-nums tracking-tighter leading-none">{project.mobileLabel}</h5>
+                                                    <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">{project.mobileSub}</p>
+                                                </div>
+                                            </div>
+                                        </LaptopMockup>
 
-                                {/* Secondary Small Mockup (Restored) */}
-                                <div className="absolute -bottom-8 -right-8 w-28 md:w-36 z-50 animate-float" style={{ animationDelay: '1s' }}>
-                                    <DeviceMockup scale={0.35}>
-                                        <div className="w-full h-full bg-[#d32f2f] flex items-center justify-center p-4">
-                                            <span className="text-white font-black text-4xl italic">CF</span>
-                                        </div>
-                                    </DeviceMockup>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="relative animate-float">
-                                <LaptopMockup scale={0.75}>
-                                    <div className="relative w-full h-full bg-[#1a1a1a] overflow-hidden">
-                                        <Image src={project.image} alt={project.name} fill className="object-cover" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-6 flex flex-col justify-end">
-                                            <div className="w-12 h-1 bg-[#d32f2f] mb-4" />
-                                            <h5 className="text-white font-black uppercase text-2xl mb-1">{project.mobileLabel}</h5>
-                                            <p className="text-white/60 text-[12px] font-medium uppercase tracking-widest">{project.mobileSub}</p>
+                                        {/* Floating Tag Detail */}
+                                        <div className="absolute -bottom-8 -right-6 w-32 md:w-40 z-50 animate-float" style={{ animationDelay: '1.5s' }}>
+                                            <div className="bg-[#1a1a1a] p-7 rounded-2xl shadow-2xl border border-[#d32f2f]/30 flex flex-col items-start gap-2 backdrop-blur-xl">
+                                                <div className="flex gap-1">
+                                                    {[1, 2, 3].map(i => <div key={i} className="w-1 h-1 rounded-full bg-[#d32f2f]/40" />)}
+                                                </div>
+                                                <span className="text-white font-black text-2xl italic tracking-tighter leading-none">PS_02</span>
+                                                <div className="w-full h-[1px] bg-white/10" />
+                                                <span className="text-[#d32f2f] text-[8px] font-black uppercase tracking-widest">Active System</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </LaptopMockup>
-
-                                {/* Secondary Small Mockup for Planshift */}
-                                <div className="absolute -bottom-8 -right-4 w-28 md:w-36 z-50 animate-float" style={{ animationDelay: '1.5s' }}>
-                                    <DeviceMockup scale={0.3}>
-                                        <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center p-4">
-                                            <span className="text-white font-black text-4xl italic">PS</span>
-                                        </div>
-                                    </DeviceMockup>
-                                </div>
+                                )}
                             </div>
-                        )}
-                    </div>
-                </div>
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </section>
     );

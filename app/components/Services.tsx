@@ -57,7 +57,7 @@ export default function Services() {
     const row2 = services.slice(3, 6);
 
     return (
-        <section id="services" className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden pt-12 pb-48 pr-12 pl-20 md:pr-24 md:pl-40">
+        <section id="services" className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden pt-12 pb-12 pr-12 pl-20 md:pr-24 md:pl-40">
             
             {/* ── Section header ── */}
             <div className="relative z-10 mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
@@ -147,7 +147,7 @@ export default function Services() {
             </div>
 
             {/* ── Bottom Details ── */}
-            <div className="mt-48 flex flex-col md:flex-row justify-between items-center gap-4 opacity-40 border-t border-[#1a1a1a]/5 pt-8">
+            <div className="mt-24 flex flex-col md:flex-row justify-between items-center gap-4 opacity-40 border-t border-[#1a1a1a]/5 pt-8">
                 <span className="text-[9px] font-bold tracking-[0.2em] uppercase">Tech-Artistry Collective</span>
                 <span className="text-[9px] font-bold tracking-[0.2em] uppercase">Core Capabilities / 2024</span>
             </div>
