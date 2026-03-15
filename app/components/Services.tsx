@@ -60,7 +60,7 @@ export default function Services() {
         <section id="services" className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden pt-12 pb-12 pr-12 pl-20 md:pr-24 md:pl-40">
             
             {/* ── Section header ── */}
-            <div className="relative z-10 mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+            <div className="relative z-10 mb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
                 <div className="max-w-2xl">
                     <motion.span 
                         initial={{ opacity: 0, y: 10 }}
@@ -75,10 +75,10 @@ export default function Services() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter mb-4"
+                        className="text-5xl md:text-6xl font-black uppercase leading-[0.85] tracking-tighter"
                     >
                         Elevating <br />
-                        <span className="text-outline" style={{ WebkitTextStroke: "1.5px #1a1a1a" }}>
+                        <span className="text-outline" style={{ WebkitTextStroke: "1.2px #1a1a1a" }}>
                             Your Vision
                         </span>
                     </motion.h2>
