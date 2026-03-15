@@ -26,7 +26,7 @@ const projects = [
         overview: "Transform flat architectural plans into navigable 3D environments. Explore future spaces in immersive VR before construction even begins.",
         accentColor: "#d32f2f",
         deviceType: "laptop",
-        image: "/planshift-mockup.png",
+        image: "/Planshift.png",
         tagline: "Spatial Innovation",
         mobileLabel: "Planshift VR",
         mobileSub: "Architectural Engine",
@@ -40,7 +40,7 @@ const projects = [
         overview: "A digital visitor registration system for schools. Digitize visitation with identity verification and secure QR-based entry to improve campus security and efficiency.",
         accentColor: "#d32f2f",
         deviceType: "phone",
-        image: "/project-mockup.png",
+        image: "/E-gate.png",
         tagline: "Secure Access",
         mobileLabel: "E-Gate System",
         mobileSub: "Visitor Verification",
@@ -225,61 +225,112 @@ export default function FeaturedProjects() {
                                 </h4>
                             </div>
 
-                            <div className="relative z-10 transform translate-x-0 md:translate-x-12 scale-90 md:scale-95">
-                                {project.deviceType === "phone" ? (
-                                    <div className="relative animate-float scale-90 md:scale-95">
-                                        <DeviceMockup scale={0.65}>
-                                            <div className="relative w-full h-full bg-[#1a1a1a] overflow-hidden">
-                                                <Image src={project.image} alt={project.name} fill className="object-cover grayscale brightness-110 contrast-125" />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/98 via-[#1a1a1a]/20 to-transparent p-7 flex flex-col justify-end">
-                                                    <div className="w-14 h-1 bg-[#d32f2f] mb-5 shadow-[0_0_20px_#d32f2f]" />
-                                                    <h5 className="text-white font-black uppercase text-xl mb-1 tabular-nums tracking-tighter leading-none">{project.mobileLabel}</h5>
-                                                    <p className="text-white/30 text-[9px] font-black uppercase tracking-[0.4em]">{project.mobileSub}</p>
+                            <div className="relative z-10 transform translate-x-0 md:translate-x-12 scale-90 md:scale-95 group">
+                                <InteractiveTilt>
+                                    {project.deviceType === "phone" ? (
+                                        <div className="relative">
+                                            <DeviceMockup scale={0.65}>
+                                                <div className="relative w-full h-full bg-[#0a0a0a] overflow-hidden">
+                                                    <Image 
+                                                        src={project.image} 
+                                                        alt={project.name} 
+                                                        fill 
+                                                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700" 
+                                                    />
+                                                    {/* Sophisticated Glass Overlay */}
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#000]/90 via-transparent to-transparent p-7 flex flex-col justify-end">
+                                                        <div className="w-12 h-1 bg-[#d32f2f] mb-4 shadow-[0_0_15px_rgba(211,47,47,0.5)]" />
+                                                        <h5 className="text-white font-black uppercase text-lg mb-0.5 tracking-tighter leading-none">{project.mobileLabel}</h5>
+                                                        <p className="text-white/40 text-[8px] font-black uppercase tracking-[0.3em]">{project.mobileSub}</p>
+                                                    </div>
+                                                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
                                                 </div>
-                                            </div>
-                                        </DeviceMockup>
+                                            </DeviceMockup>
 
-                                        {/* Premium Floating Detail */}
-                                        <div className="absolute -bottom-10 -right-10 w-28 md:w-36 z-50 animate-float" style={{ animationDelay: '1s' }}>
-                                            <div className="bg-[#d32f2f] p-6 rounded-[1.5rem] shadow-2xl flex flex-col items-center justify-center transform -rotate-12 border-4 border-white/10 overflow-hidden group">
-                                                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                <span className="text-white font-black text-4xl italic tracking-tigh relative z-10">{project.name.charAt(0)}</span>
-                                                <span className="text-white/40 text-[7px] font-black uppercase tracking-widest mt-1 relative z-10">Verify</span>
+                                            {/* Premium Floating Detail */}
+                                            <div className="absolute -bottom-8 -right-8 w-24 md:w-32 z-50 transition-transform duration-700 group-hover:translate-x-4 group-hover:-translate-y-4">
+                                                <div className="bg-[#d32f2f] p-5 rounded-[1.2rem] shadow-2xl flex flex-col items-center justify-center transform -rotate-12 border-2 border-white/20 overflow-hidden group/detail">
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover/detail:opacity-100 transition-opacity" />
+                                                    <span className="text-white font-black text-3xl italic tracking-tigh relative z-10">{project.name.charAt(0)}</span>
+                                                    <span className="text-white/40 text-[6px] font-black uppercase tracking-widest mt-0.5 relative z-10">Verify</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ) : (
-                                    <div className="relative animate-float scale-90 md:scale-95">
-                                        <LaptopMockup scale={0.8}>
-                                            <div className="relative w-full h-full bg-[#1a1a1a] overflow-hidden">
-                                                <Image src={project.image} alt={project.name} fill className="object-cover grayscale brightness-110 contrast-125" />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/98 via-[#1a1a1a]/20 to-transparent p-9 flex flex-col justify-end">
-                                                    <div className="w-14 h-1 bg-[#d32f2f] mb-5 shadow-[0_0_20px_#d32f2f]" />
-                                                    <h5 className="text-white font-black uppercase text-2xl mb-1 tabular-nums tracking-tighter leading-none">{project.mobileLabel}</h5>
-                                                    <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">{project.mobileSub}</p>
+                                    ) : (
+                                        <div className="relative">
+                                            <LaptopMockup scale={0.8}>
+                                                <div className="relative w-full h-full bg-[#0a0a0a] overflow-hidden">
+                                                    <Image 
+                                                        src={project.image} 
+                                                        alt={project.name} 
+                                                        fill 
+                                                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700" 
+                                                    />
+                                                    {/* Sophisticated Glass Overlay */}
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#000]/90 via-transparent to-transparent p-9 flex flex-col justify-end">
+                                                        <div className="w-12 h-1 bg-[#d32f2f] mb-4 shadow-[0_0_15px_rgba(211,47,47,0.5)]" />
+                                                        <h5 className="text-white font-black uppercase text-xl mb-0.5 tracking-tighter leading-none">{project.mobileLabel}</h5>
+                                                        <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.3em]">{project.mobileSub}</p>
+                                                    </div>
+                                                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
                                                 </div>
-                                            </div>
-                                        </LaptopMockup>
+                                            </LaptopMockup>
 
-                                        {/* Floating Tag Detail */}
-                                        <div className="absolute -bottom-8 -right-6 w-32 md:w-40 z-50 animate-float" style={{ animationDelay: '1.5s' }}>
-                                            <div className="bg-[#1a1a1a] p-7 rounded-2xl shadow-2xl border border-[#d32f2f]/30 flex flex-col items-start gap-2 backdrop-blur-xl">
-                                                <div className="flex gap-1">
-                                                    {[1, 2, 3].map(i => <div key={i} className="w-1 h-1 rounded-full bg-[#d32f2f]/40" />)}
+                                            {/* Floating Tag Detail */}
+                                            <div className="absolute -bottom-6 -right-5 w-28 md:w-36 z-50 transition-transform duration-700 group-hover:translate-x-4 group-hover:-translate-y-4">
+                                                <div className="bg-[#1a1a1a] p-6 rounded-xl shadow-2xl border border-[#d32f2f]/40 flex flex-col items-start gap-1.5 backdrop-blur-xl">
+                                                    <div className="flex gap-1">
+                                                        {[1, 2, 3].map(i => <div key={i} className="w-1 h-1 rounded-full bg-[#d32f2f]/50" />)}
+                                                    </div>
+                                                    <span className="text-white font-black text-xl italic tracking-tighter leading-none">PS_02</span>
+                                                    <div className="w-full h-[1px] bg-white/5" />
+                                                    <span className="text-[#d32f2f] text-[7px] font-black uppercase tracking-widest">Active System</span>
                                                 </div>
-                                                <span className="text-white font-black text-2xl italic tracking-tighter leading-none">PS_02</span>
-                                                <div className="w-full h-[1px] bg-white/10" />
-                                                <span className="text-[#d32f2f] text-[8px] font-black uppercase tracking-widest">Active System</span>
                                             </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </InteractiveTilt>
                             </div>
                         </div>
                     </motion.div>
                 </AnimatePresence>
             </div>
         </section>
+    );
+}
+
+function InteractiveTilt({ children }: { children: React.ReactNode }) {
+    const [rotateX, setRotateX] = useState(0);
+    const [rotateY, setRotateY] = useState(0);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const degX = (y - centerY) / 20;
+        const degY = (centerX - x) / 20;
+        
+        setRotateX(degX);
+        setRotateY(degY);
+    };
+
+    const handleMouseLeave = () => {
+        setRotateX(0);
+        setRotateY(0);
+    };
+
+    return (
+        <motion.div
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            animate={{ rotateX, rotateY }}
+            transition={{ type: "spring", stiffness: 150, damping: 20 }}
+            style={{ transformStyle: "preserve-3d" }}
+        >
+            {children}
+        </motion.div>
     );
 }
 

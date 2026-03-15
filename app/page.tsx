@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Services from "./components/Services";
 import FeaturedProjects from "./components/FeaturedProjects";
+import ProcessWorkflow from "./components/ProcessWorkflow";
 
 export default function Home() {
   return (
@@ -142,6 +143,7 @@ export default function Home() {
 
       <Services />
       <FeaturedProjects />
+      <ProcessWorkflow />
     </main>
   );
 }
