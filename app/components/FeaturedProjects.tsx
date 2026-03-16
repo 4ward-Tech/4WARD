@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const projects = [
     {
@@ -73,7 +73,7 @@ export default function FeaturedProjects() {
         return () => clearInterval(timer);
     }, [nextProject, currentIndex]);
 
-    const variants = {
+    const variants: Variants = {
         enter: (direction: number) => ({
             x: direction > 0 ? 100 : -100,
             opacity: 0,

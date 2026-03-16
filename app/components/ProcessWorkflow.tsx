@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const workflowSteps = [
@@ -69,6 +69,15 @@ const workflowSteps = [
 ];
 
 export default function ProcessWorkflow() {
+    const [activeStep, setActiveStep] = useState(0);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setActiveStep((prev) => (prev + 1) % workflowSteps.length);
+        }, 3000);
+        return () => clearInterval(timer);
+    }, []);
+
     return (
         <section id="process" className="relative w-full bg-[#f8f8f8] grid-bg font-jost overflow-hidden pt-12 pb-32 pr-12 pl-20 md:pr-24 md:pl-40">
             {/* ── Section Header ── */}
@@ -127,8 +136,15 @@ export default function ProcessWorkflow() {
                         <div key={idx} className="relative z-20 group">
                             {/* Duration Indicator */}
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="w-1 h-1 rounded-full bg-[#d32f2f]/40 shrink-0" />
-                                <span className="text-[8px] font-black tracking-widest text-[#1a1a1a]/30 uppercase shrink-0">
+                                <motion.div 
+                                    animate={{ 
+                                        scale: activeStep === idx ? [1, 1.5, 1] : 1,
+                                        backgroundColor: activeStep === idx ? "#d32f2f" : "rgba(211, 47, 47, 0.4)"
+                                    }}
+                                    transition={{ duration: 0.5 }}
+                                    className="w-1.5 h-1.5 rounded-full shrink-0" 
+                                />
+                                <span className={`text-[8px] font-black tracking-widest uppercase shrink-0 transition-colors duration-500 ${activeStep === idx ? "text-[#d32f2f]" : "text-[#1a1a1a]/30"}`}>
                                     {step.duration}
                                 </span>
                                 <div className="h-[1px] w-full bg-[#1a1a1a]/5" />
@@ -139,18 +155,24 @@ export default function ProcessWorkflow() {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: idx * 0.1 }}
-                                className="bg-white p-4 border border-[#1a1a1a]/5 shadow-[0_4px_20px_rgb(0,0,0,0.01)] mb-6 relative hover:shadow-[0_10px_30px_rgb(0,0,0,0.02)] transition-all duration-500 rounded-sm"
+                                animate={{ 
+                                    scale: activeStep === idx ? 1.02 : 1,
+                                    borderColor: activeStep === idx ? "rgba(211, 47, 47, 0.2)" : "rgba(26, 26, 26, 0.05)",
+                                    boxShadow: activeStep === idx ? "0 10px 30px rgb(0,0,0,0.04)" : "0 4px 20px rgb(0,0,0,0.01)"
+                                }}
+                                transition={{ duration: 0.5 }}
+                                className={`bg-white p-4 border mb-6 relative transition-all duration-500 rounded-sm cursor-pointer ${activeStep === idx ? "shadow-[0_10px_30px_rgb(0,0,0,0.04)]" : ""}`}
+                                onMouseEnter={() => setActiveStep(idx)}
                             >
-                                <div className="absolute top-0 left-0 w-[2px] h-full bg-[#d32f2f] opacity-20 group-hover:opacity-100 transition-opacity" />
-                                <h3 className="text-sm font-black uppercase tracking-tight mb-2 text-[#1a1a1a] leading-none">{step.title}</h3>
-                                <p className="text-[9px] leading-relaxed text-[#1a1a1a]/40 font-bold italic line-clamp-2">
+                                <div className={`absolute top-0 left-0 w-[2.5px] h-full bg-[#d32f2f] transition-opacity duration-500 ${activeStep === idx ? "opacity-100" : "opacity-20"}`} />
+                                <h3 className={`text-sm font-black uppercase tracking-tight mb-2 transition-colors duration-500 ${activeStep === idx ? "text-[#d32f2f]" : "text-[#1a1a1a]"}`}>{step.title}</h3>
+                                <p className={`text-[9px] leading-relaxed font-bold italic line-clamp-2 transition-colors duration-500 ${activeStep === idx ? "text-[#1a1a1a]/70" : "text-[#1a1a1a]/40"}`}>
                                     {step.description}
                                 </p>
 
                                 {/* Connection Arrow (only on desktop desktops) */}
                                 {idx < workflowSteps.length - 1 && (
-                                    <div className="absolute top-1/2 -right-8 translate-x-1/2 -translate-y-1/2 z-30 opacity-5 group-hover:opacity-50 transition-all duration-500 hidden md:block">
+                                    <div className={`absolute top-1/2 -right-8 translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500 hidden md:block ${activeStep === idx ? "opacity-60 translate-x-[60%]" : "opacity-5"}`}>
                                         <svg width="12" height="6" viewBox="0 0 24 12" fill="none">
                                             <path d="M0 6H22M22 6L17 1M22 6L17 11" stroke="#d32f2f" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
@@ -163,26 +185,29 @@ export default function ProcessWorkflow() {
                                 {step.details.map((detail, dIdx) => (
                                     <motion.div 
                                         key={dIdx}
-                                        initial={{ opacity: 0, x: -5 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: (idx * 0.1) + (dIdx * 0.05) }}
+                                        animate={{ 
+                                            opacity: activeStep === idx ? 1 : 0.6,
+                                            x: activeStep === idx ? 2 : 0
+                                        }}
                                         className="pl-2"
                                     >
                                         <div className="flex items-center gap-2 mb-2">
                                             <div 
-                                                className="w-4 h-4 rounded-full flex items-center justify-center text-[6px] font-black text-white shrink-0"
-                                                style={{ backgroundColor: detail.iconColor }}
+                                                className="w-4 h-4 rounded-full flex items-center justify-center text-[6px] font-black text-white shrink-0 transition-transform duration-500"
+                                                style={{ 
+                                                    backgroundColor: detail.iconColor,
+                                                    transform: activeStep === idx ? "scale(1.1)" : "scale(1)"
+                                                }}
                                             >
                                                 {detail.icon}
                                             </div>
-                                            <span className="text-[8px] font-black tracking-widest text-[#1a1a1a]/60 uppercase">
+                                            <span className={`text-[8px] font-black tracking-widest uppercase transition-colors duration-500 ${activeStep === idx ? "text-[#1a1a1a]" : "text-[#1a1a1a]/60"}`}>
                                                 {detail.label}
                                             </span>
                                         </div>
-                                        <div className="ml-2 border-l border-[#1a1a1a]/5 pl-3 py-0.5">
+                                        <div className={`ml-2 border-l pl-3 py-0.5 transition-colors duration-500 ${activeStep === idx ? "border-[#d32f2f]/30" : "border-[#1a1a1a]/5"}`}>
                                             {detail.items.map((item, iIdx) => (
-                                                <p key={iIdx} className="text-[8.5px] leading-relaxed text-[#1a1a1a]/30 font-bold">
+                                                <p key={iIdx} className={`text-[8.5px] leading-relaxed font-bold transition-colors duration-500 ${activeStep === idx ? "text-[#1a1a1a]/60" : "text-[#1a1a1a]/30"}`}>
                                                     {item}
                                                 </p>
                                             ))}
