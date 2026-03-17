@@ -3,51 +3,8 @@
 import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-
-const projects = [
-    {
-        id: "01",
-        name: "CineFlow",
-        subtitle: "Visual Narrative Platform",
-        overview: "An industry-standard color grading and visual storytelling platform for cinematic productions. achieve consistency across complex narratives with professional-grade tools.",
-        accentColor: "#d32f2f",
-        deviceType: "phone",
-        image: "/project-mockup.png",
-        tagline: "Visual Excellence",
-        mobileLabel: "CineFlow Mobile",
-        mobileSub: "Post-Production Suite",
-        year: "2024",
-        category: "Cinematography"
-    },
-    {
-        id: "02",
-        name: "Planshift",
-        subtitle: "3D Architecture & VR Explorer",
-        overview: "Transform flat architectural plans into navigable 3D environments. Explore future spaces in immersive VR before construction even begins.",
-        accentColor: "#d32f2f",
-        deviceType: "laptop",
-        image: "/Planshift.png",
-        tagline: "Spatial Innovation",
-        mobileLabel: "Planshift VR",
-        mobileSub: "Architectural Engine",
-        year: "2023",
-        category: "Visualization"
-    },
-    {
-        id: "03",
-        name: "E-Gate",
-        subtitle: "Digital Access Control",
-        overview: "A digital visitor registration system for schools. Digitize visitation with identity verification and secure QR-based entry to improve campus security and efficiency.",
-        accentColor: "#d32f2f",
-        deviceType: "phone",
-        image: "/E-gate.png",
-        tagline: "Secure Access",
-        mobileLabel: "E-Gate System",
-        mobileSub: "Visitor Verification",
-        year: "2024",
-        category: "Security Tech"
-    }
-];
+import { projects } from "../lib/projects";
+import Link from "next/link";
 
 export default function FeaturedProjects() {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -191,6 +148,7 @@ export default function FeaturedProjects() {
                                         <p className="text-sm md:text-base leading-relaxed font-bold text-[#1a1a1a]/70 font-jost">
                                             {project.overview}
                                         </p>
+                                    <Link href={`/projects/${project.slug}`}>
                                         <div className="mt-7 flex items-center gap-5 cursor-pointer group/link">
                                             <div className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-white group-hover/link:bg-[#d32f2f] transition-all duration-500 overflow-hidden relative">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -201,6 +159,7 @@ export default function FeaturedProjects() {
                                                 Case Study
                                             </span>
                                         </div>
+                                    </Link>
                                     </div>
                                     
                                     <div className="mt-8 flex items-center gap-6 overflow-hidden">
