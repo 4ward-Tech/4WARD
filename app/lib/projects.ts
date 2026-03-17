@@ -23,38 +23,37 @@ export interface Project {
     }[];
     designGoal: string;
     fullImage: string;
+    modelPath?: string;
 }
 
 export const projects: Project[] = [
     {
         id: "01",
-        slug: "cineflow",
-        name: "CineFlow",
-        subtitle: "Visual Narrative Platform",
-        overview: "An industry-standard color grading and visual storytelling platform for cinematic productions.",
-        accentColor: "#d32f2f",
+        slug: "cashwater",
+        name: "CashWater",
+        subtitle: "Intelligent Water Management",
+        overview: "An intelligent water management system that digitizes water billing and empowers local communities to record usage.",
+        accentColor: "#d32f2f", // Red for consistency
         deviceType: "phone",
         image: "/project-mockup.png",
-        tagline: "Visual Excellence",
-        mobileLabel: "CineFlow Mobile",
-        mobileSub: "Post-Production Suite",
+        tagline: "Digitizing Resources",
+        mobileLabel: "CashWater Mobile",
+        mobileSub: "Resource Hub",
         year: "2024",
-        category: "Cinematography",
-        description: "We wanted to reimagine the mobile video editing experience, making it simple yet powerful enough for professional cinematographers to perform quick color grades on-set.",
-        role: "Lead UI/UX Designer",
-        techStack: ["Next.js", "Three.js", "Framer Motion"],
+        category: "IoT / AI",
+        description: "CashWater is an intelligent water management system that digitizes water billing, empowers local communities to record usage, and uses AI to detect anomalies and improve revenue collection.",
+        role: "Lead UI/UX Designer & Product Strategist",
+        techStack: ["Next.js", "Three.js", "AI Integration", "IoT"],
         userFlowSteps: [
-            { title: "Splash", image: "/cineflow_journey.png", description: "Initial brand impression" },
-            { title: "Onboarding", image: "/cineflow_journey.png", description: "Quick tool overview" },
-            { title: "Capture", image: "/cineflow_journey.png", description: "High-bitrate recording" },
-            { title: "Library", image: "/cineflow_journey.png", description: "Manage production clips" },
-            { title: "Color Lab", image: "/cineflow_journey.png", description: "Professional grading" },
-            { title: "LUTs", image: "/cineflow_journey.png", description: "Apply cinematic presets" },
-            { title: "Scopes", image: "/cineflow_journey.png", description: "Waveform analysis" },
-            { title: "Export", image: "/cineflow_journey.png", description: "Render in Prores" }
+            { title: "Dashboard", image: "/cineflow_journey.png", description: "Real-time usage metrics" },
+            { title: "Recording", image: "/cineflow_journey.png", description: "Manual data input" },
+            { title: "Billing", image: "/cineflow_journey.png", description: "Digital invoice generation" },
+            { title: "AI Analysis", image: "/cineflow_journey.png", description: "Anomaly detection" },
+            { title: "Collection", image: "/cineflow_journey.png", description: "Seamless payment gateway" }
         ],
-        designGoal: "Clean-cut minimalistic design with accentuated key interface elements for focused editing.",
-        fullImage: "/project-mockup.png"
+        designGoal: "User-centric interface designed for community members and administrators to manage resources efficiently.",
+        fullImage: "/project-mockup.png",
+        modelPath: "/cashwater1_draco.glb"
     },
     {
         id: "02",

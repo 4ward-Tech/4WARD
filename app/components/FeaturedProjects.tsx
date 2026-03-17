@@ -5,6 +5,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { projects } from "../lib/projects";
 import Link from "next/link";
+import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Stage, useGLTF, PerspectiveCamera } from "@react-three/drei";
 
 export default function FeaturedProjects() {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,7 +28,7 @@ export default function FeaturedProjects() {
     useEffect(() => {
         const timer = setInterval(() => {
             nextProject();
-        }, 8000); 
+        }, 15000); 
 
         return () => clearInterval(timer);
     }, [nextProject, currentIndex]);
@@ -186,7 +189,33 @@ export default function FeaturedProjects() {
 
                             <div className="relative z-10 transform translate-x-0 md:translate-x-12 scale-90 md:scale-95 group">
                                 <InteractiveTilt>
-                                    {project.deviceType === "phone" ? (
+                                    {project.modelPath ? (
+                                        <div className="relative w-full aspect-square min-h-[400px] flex items-center justify-center">
+                                            <div className="w-full h-full relative">
+                                                <Canvas shadows={{ type: 1 }} dpr={[1, 2]}>
+                                                    <PerspectiveCamera makeDefault position={[0, 0, 7]} fov={35} />
+                                                    <ambientLight intensity={0.8} />
+                                                    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={3} castShadow />
+                                                    <pointLight position={[-10, 10, -10]} intensity={2} color={project.accentColor} />
+                                                    <Suspense fallback={null}>
+                                                        <Stage environment="city" intensity={1}>
+                                                            <Model url={project.modelPath} />
+                                                        </Stage>
+                                                    </Suspense>
+                                                    <OrbitControls autoRotate autoRotateSpeed={1.5} enableZoom={false} makeDefault />
+                                                </Canvas>
+                                            </div>
+                                            
+                                            {/* Premium Floating Detail for Model */}
+                                            <div className="absolute -bottom-8 -right-8 w-24 md:w-32 z-50 transition-transform duration-700 group-hover:translate-x-4 group-hover:-translate-y-4">
+                                                <div className="p-5 rounded-[1.2rem] shadow-2xl flex flex-col items-center justify-center transform -rotate-12 border-2 border-white/20 overflow-hidden group/detail" style={{ backgroundColor: project.accentColor }}>
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover/detail:opacity-100 transition-opacity" />
+                                                    <span className="text-white font-black text-3xl italic tracking-tigh relative z-10">{project.name.charAt(0)}</span>
+                                                    <span className="text-white/40 text-[6px] font-black uppercase tracking-widest mt-0.5 relative z-10">Hardware</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : project.deviceType === "phone" ? (
                                         <div className="relative">
                                             <DeviceMockup scale={0.65}>
                                                 <div className="relative w-full h-full bg-[#0a0a0a] overflow-hidden">
@@ -194,11 +223,12 @@ export default function FeaturedProjects() {
                                                         src={project.image} 
                                                         alt={project.name} 
                                                         fill 
+                                                        sizes="(max-width: 768px) 100vw, 30vw"
                                                         className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700" 
                                                     />
                                                     {/* Sophisticated Glass Overlay */}
                                                     <div className="absolute inset-0 bg-gradient-to-t from-[#000]/90 via-transparent to-transparent p-7 flex flex-col justify-end">
-                                                        <div className="w-12 h-1 bg-[#d32f2f] mb-4 shadow-[0_0_15px_rgba(211,47,47,0.5)]" />
+                                                        <div className="w-12 h-1 mb-4 shadow-[0_0_15px_rgba(211,47,47,0.5)]" style={{ backgroundColor: project.accentColor }} />
                                                         <h5 className="text-white font-black uppercase text-lg mb-0.5 tracking-tighter leading-none">{project.mobileLabel}</h5>
                                                         <p className="text-white/40 text-[8px] font-black uppercase tracking-[0.3em]">{project.mobileSub}</p>
                                                     </div>
@@ -208,7 +238,7 @@ export default function FeaturedProjects() {
 
                                             {/* Premium Floating Detail */}
                                             <div className="absolute -bottom-8 -right-8 w-24 md:w-32 z-50 transition-transform duration-700 group-hover:translate-x-4 group-hover:-translate-y-4">
-                                                <div className="bg-[#d32f2f] p-5 rounded-[1.2rem] shadow-2xl flex flex-col items-center justify-center transform -rotate-12 border-2 border-white/20 overflow-hidden group/detail">
+                                                <div className="p-5 rounded-[1.2rem] shadow-2xl flex flex-col items-center justify-center transform -rotate-12 border-2 border-white/20 overflow-hidden group/detail" style={{ backgroundColor: project.accentColor }}>
                                                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover/detail:opacity-100 transition-opacity" />
                                                     <span className="text-white font-black text-3xl italic tracking-tigh relative z-10">{project.name.charAt(0)}</span>
                                                     <span className="text-white/40 text-[6px] font-black uppercase tracking-widest mt-0.5 relative z-10">Verify</span>
@@ -223,11 +253,12 @@ export default function FeaturedProjects() {
                                                         src={project.image} 
                                                         alt={project.name} 
                                                         fill 
+                                                        sizes="(max-width: 768px) 100vw, 50vw"
                                                         className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700" 
                                                     />
                                                     {/* Sophisticated Glass Overlay */}
                                                     <div className="absolute inset-0 bg-gradient-to-t from-[#000]/90 via-transparent to-transparent p-9 flex flex-col justify-end">
-                                                        <div className="w-12 h-1 bg-[#d32f2f] mb-4 shadow-[0_0_15px_rgba(211,47,47,0.5)]" />
+                                                        <div className="w-12 h-1 mb-4 shadow-[0_0_15px_rgba(211,47,47,0.5)]" style={{ backgroundColor: project.accentColor }} />
                                                         <h5 className="text-white font-black uppercase text-xl mb-0.5 tracking-tighter leading-none">{project.mobileLabel}</h5>
                                                         <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.3em]">{project.mobileSub}</p>
                                                     </div>
@@ -237,13 +268,13 @@ export default function FeaturedProjects() {
 
                                             {/* Floating Tag Detail */}
                                             <div className="absolute -bottom-6 -right-5 w-28 md:w-36 z-50 transition-transform duration-700 group-hover:translate-x-4 group-hover:-translate-y-4">
-                                                <div className="bg-[#1a1a1a] p-6 rounded-xl shadow-2xl border border-[#d32f2f]/40 flex flex-col items-start gap-1.5 backdrop-blur-xl">
+                                                <div className="bg-[#1a1a1a] p-6 rounded-xl shadow-2xl border flex flex-col items-start gap-1.5 backdrop-blur-xl" style={{ borderColor: `${project.accentColor}40` }}>
                                                     <div className="flex gap-1">
-                                                        {[1, 2, 3].map(i => <div key={i} className="w-1 h-1 rounded-full bg-[#d32f2f]/50" />)}
+                                                        {[1, 2, 3].map(i => <div key={i} className="w-1 h-1 rounded-full opacity-50" style={{ backgroundColor: project.accentColor }} />)}
                                                     </div>
                                                     <span className="text-white font-black text-xl italic tracking-tighter leading-none">PS_02</span>
                                                     <div className="w-full h-[1px] bg-white/5" />
-                                                    <span className="text-[#d32f2f] text-[7px] font-black uppercase tracking-widest">Active System</span>
+                                                    <span className="text-[7px] font-black uppercase tracking-widest" style={{ color: project.accentColor }}>Active System</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -337,4 +368,12 @@ function LaptopMockup({ children, scale = 1 }: { children: React.ReactNode, scal
             </div>
         </div>
     );
+}
+
+function Model({ url }: { url: string }) {
+    const { scene } = useGLTF(url, "https://www.gstatic.com/draco/versioned/decoders/1.5.5/");
+    // Clone the scene so it can be used in multiple canvases safely
+    const clonedScene = React.useMemo(() => scene.clone(), [scene]);
+    // Ensure the model faces forward initially by rotating it 180 degrees if it's starting from the back
+    return <primitive object={clonedScene} rotation={[0, Math.PI, 0]} />;
 }

@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useParams, notFound } from "next/navigation";
 import { motion } from "framer-motion";
 import { projects } from "../../lib/projects";
-import React from "react";
+import React, { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Stage, useGLTF, PerspectiveCamera } from "@react-three/drei";
 
 export default function ProjectPage() {
     const params = useParams();
@@ -21,26 +23,56 @@ export default function ProjectPage() {
             {/* Header / Intro Section */}
             <section className="relative z-10 py-8 pr-12 pl-20 md:py-12 md:pr-24 md:pl-40 flex flex-col items-center">
                 <div className="w-full flex flex-col md:flex-row items-center gap-12 md:gap-24 max-w-7xl">
-                    {/* Left: Device Mockup */}
+                    {/* Left: Device Mockup or 3D Hardware */}
                     <motion.div 
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         className="relative w-full md:w-1/2 flex justify-center"
                     >
-                        <div className="relative group">
-                            <div className="relative z-10 scale-75 md:scale-90 lg:scale-100">
-                                {project.deviceType === "phone" ? (
-                                    <div className="w-[260px] h-[540px] bg-black rounded-[2.5rem] border-[8px] border-[#1a1a1a] shadow-2xl overflow-hidden relative">
-                                        <Image src={project.image} alt={project.name} fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-                                    </div>
-                                ) : (
-                                    <div className="w-[450px] h-[280px] bg-black rounded-t-xl border-[10px] border-[#1a1a1a] shadow-2xl overflow-hidden relative">
-                                        <Image src={project.image} alt={project.name} fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-                                        <div className="absolute inset-x-0 bottom-[-15px] h-[15px] bg-[#1a1a1a] rounded-b-xl" />
-                                    </div>
-                                )}
-                            </div>
+                        <div className="relative group w-full h-[500px] flex items-center justify-center">
+                            {project.modelPath ? (
+                                <div className="w-full h-full relative">
+                                    <Canvas shadows={{ type: 1 }} dpr={[1, 2]}>
+                                        <PerspectiveCamera makeDefault position={[0, 0, 7]} fov={35} />
+                                        <ambientLight intensity={0.8} />
+                                        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={3} castShadow />
+                                        <pointLight position={[-10, 10, -10]} intensity={2} color={project.accentColor} />
+                                        <Suspense fallback={null}>
+                                            <Stage environment="city" intensity={1}>
+                                                <Model url={project.modelPath} />
+                                            </Stage>
+                                        </Suspense>
+                                        <OrbitControls autoRotate autoRotateSpeed={0.4} enableZoom={false} makeDefault />
+                                    </Canvas>
+                                </div>
+                            ) : (
+                                <div className="relative z-10 scale-75 md:scale-90 lg:scale-100">
+                                    {project.deviceType === "phone" ? (
+                                        <div className="w-[260px] h-[540px] bg-black rounded-[2.5rem] border-[8px] border-[#1a1a1a] shadow-2xl overflow-hidden relative">
+                                            <Image 
+                                                src={project.image} 
+                                                alt={project.name} 
+                                                fill 
+                                                sizes="(max-width: 768px) 100vw, 30vw"
+                                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="w-[450px] h-[280px] bg-black rounded-t-xl border-[10px] border-[#1a1a1a] shadow-2xl overflow-hidden relative">
+                                            <Image 
+                                                src={project.image} 
+                                                alt={project.name} 
+                                                fill 
+                                                sizes="(max-width: 768px) 100vw, 30vw"
+                                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+                                            />
+                                            <div className="absolute inset-x-0 bottom-[-15px] h-[15px] bg-[#1a1a1a] rounded-b-xl" />
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                            
                             {/* Floating Card */}
                             <motion.div 
                                 initial={{ opacity: 0, y: 20 }}
@@ -49,8 +81,8 @@ export default function ProjectPage() {
                                 className="absolute -bottom-6 -right-4 md:-right-10 bg-white p-6 md:p-8 shadow-2xl border border-[#1a1a1a]/5 max-w-xs z-20"
                             >
                                 <div className="flex items-center gap-3 mb-3">
-                                    <div className="w-8 h-[1.5px] bg-[#d32f2f]" />
-                                    <span className="text-[9px] font-black tracking-[0.3em] text-[#d32f2f] uppercase">Case Study</span>
+                                    <div className="w-8 h-[1.5px]" style={{ backgroundColor: project.accentColor }} />
+                                    <span className="text-[9px] font-black tracking-[0.3em] uppercase" style={{ color: project.accentColor }}>Case Study</span>
                                 </div>
                                 <h3 className="text-xl font-black uppercase mb-2 tracking-tighter leading-none">{project.name}</h3>
                                 <p className="text-[9px] font-bold text-[#1a1a1a]/50 leading-relaxed uppercase italic">
@@ -233,7 +265,7 @@ export default function ProjectPage() {
                 </div>
             </section>
 
-            {/* Designing Section */}
+            {/* Designing Section - RESTORED TO MOBILE APP FOR ALL */}
             <section className="relative z-10 py-16 pr-12 pl-20 md:py-24 md:pr-24 md:pl-40">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-32 items-center">
                     <motion.div 
@@ -325,6 +357,88 @@ export default function ProjectPage() {
                 </div>
             </section>
 
+            {/* Hardware Integration Section - HARMONIZED */}
+            {project.modelPath && (
+                <section className="relative z-10 py-16 pr-12 pl-20 md:py-24 md:pr-24 md:pl-40 bg-[#f8f8f8] grid-bg border-t border-[#1a1a1a]/5">
+                    <div className="max-w-7xl mx-auto flex flex-col md:flex-row-reverse gap-16 md:gap-32 items-center">
+                        <motion.div 
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="w-full md:w-1/2"
+                        >
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-10 h-[1px]" style={{ backgroundColor: project.accentColor }} />
+                                <span className="text-[9px] font-black uppercase tracking-[0.5em]" style={{ color: project.accentColor }}>Hardware Integration</span>
+                            </div>
+                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-8">Physical Device</h2>
+                            <p className="text-sm text-[#1a1a1a]/60 font-bold leading-relaxed mb-10 max-w-md">
+                                The physical core of the {project.name} ecosystem. Engineered for durability and seamless digital connectivity in challenging environments.
+                            </p>
+                            
+                            <div className="space-y-6">
+                                <div className="flex gap-5 items-start group">
+                                    <div className="w-9 h-9 border border-[#1a1a1a]/10 flex items-center justify-center bg-white shadow-sm transition-all duration-500 hover:text-white" style={{ ['--hover-bg' as any]: project.accentColor }}>
+                                        <style jsx>{`
+                                            div:hover { background-color: ${project.accentColor} !important; border-color: ${project.accentColor} !important; }
+                                        `}</style>
+                                        <span className="text-[10px] font-black">01</span>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xs font-black uppercase mb-1 tracking-widest">Industrial Form</h4>
+                                        <p className="text-[10px] font-bold text-[#1a1a1a]/40 max-w-[280px] leading-relaxed">Weather-resistant enclosure optimized for outdoor community use.</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-5 items-start group">
+                                    <div className="w-9 h-9 border border-[#1a1a1a]/10 flex items-center justify-center bg-white shadow-sm transition-all duration-500 hover:text-white">
+                                        <span className="text-[10px] font-black">02</span>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xs font-black uppercase mb-1 tracking-widest">Digital Mesh</h4>
+                                        <p className="text-[10px] font-bold text-[#1a1a1a]/40 max-w-[280px] leading-relaxed">Low-power IoT connectivity ensuring 99.9% uptime for billing data.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1 }}
+                            className="w-full md:w-1/2 relative flex justify-center py-12 md:py-0 min-h-[500px]"
+                        >
+                            <div className="w-full aspect-square relative bg-white/50 backdrop-blur-sm border border-[#1a1a1a]/5 shadow-[0_40px_80px_rgba(0,0,0,0.05)] rounded-3xl overflow-hidden">
+                                <Canvas shadows={{ type: 1 }} dpr={[1, 2]}>
+                                    <PerspectiveCamera makeDefault position={[0, 0, 7]} fov={35} />
+                                    <ambientLight intensity={0.8} />
+                                    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={3} castShadow />
+                                    <pointLight position={[-10, 10, -10]} intensity={2} color={project.accentColor} />
+                                    <Suspense fallback={null}>
+                                        <Stage environment="city" intensity={1}>
+                                            <Model url={project.modelPath} />
+                                        </Stage>
+                                    </Suspense>
+                                    <OrbitControls autoRotate autoRotateSpeed={0.4} enableZoom={false} makeDefault />
+                                </Canvas>
+
+                                {/* Aesthetic ID Tag for Hardware */}
+                                <motion.div 
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.8 }}
+                                    className="absolute bottom-6 left-6 p-6 shadow-2xl z-20 flex flex-col gap-1 -rotate-2"
+                                    style={{ backgroundColor: project.accentColor }}
+                                >
+                                    <span className="text-white font-black text-xl italic tracking-tighter leading-none">HW_{project.id}</span>
+                                    <span className="text-white/50 text-[7px] font-black uppercase tracking-[0.3em]">PROTOTYPE_V1</span>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
+            )}
+
             {/* Bottom Nav / Next Project */}
             <section className="relative z-10 py-12 bg-[#1a1a1a] text-white">
                 <div className="max-w-7xl mx-auto px-12 md:px-24 flex justify-between items-center">
@@ -353,7 +467,13 @@ const FlowNode = ({ label, image, showAccent = false, wide = false }: { label: s
     <div className={`h-36 bg-white border border-[#e5e5e5] p-2 flex flex-col items-center justify-between shadow-sm group hover:shadow-md transition-shadow ${wide ? "w-full" : "w-28"}`}>
         <div className="w-full aspect-[4/3] bg-gray-50 flex items-center justify-center p-2 relative">
             {image ? (
-                <Image src={image} alt={label} fill className="object-cover grayscale group-hover:grayscale-0 transition-opacity duration-500 opacity-60 group-hover:opacity-100" />
+                <Image 
+                    src={image} 
+                    alt={label} 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, 15vw"
+                    className="object-cover grayscale group-hover:grayscale-0 transition-opacity duration-500 opacity-60 group-hover:opacity-100" 
+                />
             ) : (
                 <svg className="w-full h-full text-gray-200" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c0 1.1-.9-2-2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
@@ -374,3 +494,11 @@ const DeviceMockup = ({ children }: { children: React.ReactNode }) => (
         {children}
     </div>
 );
+
+function Model({ url }: { url: string }) {
+    const { scene } = useGLTF(url, "https://www.gstatic.com/draco/versioned/decoders/1.5.5/");
+    // Clone the scene so it can be used in multiple canvases safely
+    const clonedScene = React.useMemo(() => scene.clone(), [scene]);
+    // Ensure the model faces forward initially
+    return <primitive object={clonedScene} rotation={[0, Math.PI, 0]} />;
+}
