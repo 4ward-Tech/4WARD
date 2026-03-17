@@ -44,10 +44,14 @@ export const projects: Project[] = [
         role: "Lead UI/UX Designer",
         techStack: ["Next.js", "Three.js", "Framer Motion"],
         userFlowSteps: [
-            { title: "Splash", image: "/project-mockup.png", description: "Initial brand impression" },
-            { title: "Onboarding", image: "/project-mockup.png", description: "Quick tool overview" },
-            { title: "Registration", image: "/project-mockup.png", description: "Secure account sync" },
-            { title: "Catalog", image: "/project-mockup.png", description: "Browse production assets" }
+            { title: "Splash", image: "/cineflow_journey.png", description: "Initial brand impression" },
+            { title: "Onboarding", image: "/cineflow_journey.png", description: "Quick tool overview" },
+            { title: "Capture", image: "/cineflow_journey.png", description: "High-bitrate recording" },
+            { title: "Library", image: "/cineflow_journey.png", description: "Manage production clips" },
+            { title: "Color Lab", image: "/cineflow_journey.png", description: "Professional grading" },
+            { title: "LUTs", image: "/cineflow_journey.png", description: "Apply cinematic presets" },
+            { title: "Scopes", image: "/cineflow_journey.png", description: "Waveform analysis" },
+            { title: "Export", image: "/cineflow_journey.png", description: "Render in Prores" }
         ],
         designGoal: "Clean-cut minimalistic design with accentuated key interface elements for focused editing.",
         fullImage: "/project-mockup.png"
@@ -70,9 +74,13 @@ export const projects: Project[] = [
         role: "3D Product Designer",
         techStack: ["React", "WebGL", "Unity"],
         userFlowSteps: [
-            { title: "Upload", image: "/Planshift.png", description: "Import 2D blueprints" },
-            { title: "Process", image: "/Planshift.png", description: "AI-driven 3D extrapolation" },
-            { title: "Explore", image: "/Planshift.png", description: "Immersive VR walkthrough" }
+            { title: "Start", image: "/planshift_journey.png", description: "Project initialization" },
+            { title: "Import", image: "/planshift_journey.png", description: "Upload CAD drawings" },
+            { title: "3D Engine", image: "/planshift_journey.png", description: "Voxel extrapolation" },
+            { title: "Materials", image: "/planshift_journey.png", description: "Apply textures & lighting" },
+            { title: "VR Mode", image: "/planshift_journey.png", description: "Immersive walkthrough" },
+            { title: "Snapshot", image: "/planshift_journey.png", description: "High-res render" },
+            { title: "Share", image: "/planshift_journey.png", description: "Client presentation" }
         ],
         designGoal: "Minimalist spatial UI that stays out of the way of the architectural vision.",
         fullImage: "/Planshift.png"
@@ -95,9 +103,13 @@ export const projects: Project[] = [
         role: "Full Stack Developer",
         techStack: ["TypeScript", "Firebase", "React Native"],
         userFlowSteps: [
-            { title: "Scan", image: "/E-gate.png", description: "Quick QR entry" },
-            { title: "Verify", image: "/E-gate.png", description: "Database check" },
-            { title: "Confirm", image: "/E-gate.png", description: "Admission granted" }
+            { title: "Scan QR", image: "/egate_journey.png", description: "Quick entry point" },
+            { title: "Detect", image: "/egate_journey.png", description: "AI face recognition" },
+            { title: "Verify", image: "/egate_journey.png", description: "ID authenticity check" },
+            { title: "Records", image: "/egate_journey.png", description: "Consult database" },
+            { title: "Access", image: "/egate_journey.png", description: "Grant permission" },
+            { title: "Notify", image: "/egate_journey.png", description: "Alert staff/parents" },
+            { title: "Logs", image: "/egate_journey.png", description: "Movement statistics" }
         ],
         designGoal: "High-contrast UI for readability in various lighting conditions at school entrances.",
         fullImage: "/E-gate.png"

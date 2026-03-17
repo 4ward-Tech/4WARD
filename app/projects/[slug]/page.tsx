@@ -119,7 +119,7 @@ export default function ProjectPage() {
                         </p>
                     </motion.div>
 
-                    {/* Refined Tree Diagram - COMPACT HEIGHT */}
+                    {/* Refined Tree Diagram - DYNAMIC JOURNEY */}
                     <div className="relative min-h-[450px] w-full mt-12 hidden md:block overflow-visible scale-90 origin-left">
                         <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-0" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -128,39 +128,95 @@ export default function ProjectPage() {
                                 </marker>
                             </defs>
                             
-                            {/* Lines connecting nodes - UPDATED COORDINATES */}
                             <g stroke="#1a1a1a" strokeWidth="1" fill="none" opacity="0.1" markerEnd="url(#arrow)">
-                                <path d="M110 225 H170" />
-                                <path d="M280 225 C310 225 310 150 340 150" />
-                                <path d="M280 225 C310 225 310 300 340 300" />
-                                <path d="M450 150 C480 150 480 75 510 75" />
-                                <path d="M450 150 C480 150 480 175 510 175" />
-                                <path d="M450 300 C480 300 480 250 510 250" />
-                                <path d="M450 300 C480 300 480 325 510 325" />
-                                <path d="M450 300 C480 300 480 400 510 400" />
-                                <path d="M620 75 C650 75 650 100 680 100" />
-                                <path d="M620 175 C650 175 650 175 680 175" />
-                                <path d="M620 250 C650 250 650 250 680 250" />
-                                <path d="M620 400 C650 400 650 400 680 400" />
-                                <path d="M790 175 C820 175 820 250 850 250" />
-                                <path d="M790 250 C820 250 820 250 850 250" />
+                                {/* Column 1 to 2 */}
+                                {project.userFlowSteps.length >= 2 && <path d="M112 247 H170" />}
+                                
+                                {/* Column 2 to 3 */}
+                                {project.userFlowSteps.length >= 4 && (
+                                    <>
+                                        <path d="M282 247 C310 247 310 172 340 172" />
+                                        <path d="M282 247 C310 247 310 322 340 322" />
+                                    </>
+                                )}
+
+                                {/* Column 3 to 4 */}
+                                {project.userFlowSteps.length >= 7 && (
+                                    <>
+                                        <path d="M452 172 C480 172 480 97 510 97" />
+                                        <path d="M452 172 C480 172 480 197 510 197" />
+                                        <path d="M452 322 C480 322 480 297 510 297" />
+                                    </>
+                                )}
+
+                                {/* Column 4 to Final */}
+                                {project.userFlowSteps.length > 4 && (
+                                    <>
+                                        <path d="M622 97 C700 97 750 247 850 247" />
+                                        <path d="M622 197 C700 197 750 247 850 247" />
+                                        <path d="M622 297 C700 297 750 247 850 247" />
+                                    </>
+                                )}
+                            </g>
+
+                            {/* Animated Signal Wave Layer (Glow) */}
+                            <g fill="none" opacity="1" className="animate-signal">
+                                {project.userFlowSteps.length >= 2 && <path d="M112 247 H170" />}
+                                {project.userFlowSteps.length >= 4 && (
+                                    <>
+                                        <path d="M282 247 C310 247 310 172 340 172" />
+                                        <path d="M282 247 C310 247 310 322 340 322" />
+                                    </>
+                                )}
+                                {project.userFlowSteps.length >= 7 && (
+                                    <>
+                                        <path d="M452 172 C480 172 480 97 510 97" />
+                                        <path d="M452 172 C480 172 480 197 510 197" />
+                                        <path d="M452 322 C480 322 480 297 510 297" />
+                                    </>
+                                )}
+                                {project.userFlowSteps.length > 4 && (
+                                    <>
+                                        <path d="M622 97 C700 97 750 247 850 247" />
+                                        <path d="M622 197 C700 197 750 247 850 247" />
+                                        <path d="M622 297 C700 297 750 247 850 247" />
+                                    </>
+                                )}
                             </g>
                         </svg>
 
-                        {/* Nodes positioned absolutely - COMPACTED */}
-                        <div className="absolute top-[175px] left-0"><FlowNode label="Splash" /></div>
-                        <div className="absolute top-[175px] left-[170px]"><FlowNode label="Onboarding" showAccent /></div>
-                        <div className="absolute top-[100px] left-[340px]"><FlowNode label="Registration" /></div>
-                        <div className="absolute top-[250px] left-[340px]"><FlowNode label="Login" showAccent /></div>
-                        <div className="absolute top-[25px] left-[510px]"><FlowNode label="Home" /></div>
-                        <div className="absolute top-[125px] left-[510px]"><FlowNode label="Catalog" showAccent /></div>
-                        <div className="absolute top-[200px] left-[510px]"><FlowNode label="Favorites" showAccent /></div>
-                        <div className="absolute top-[350px] left-[510px]"><FlowNode label="Profile" /></div>
-                        <div className="absolute top-[50px] left-[680px]"><FlowNode label="Quick View" showAccent /></div>
-                        <div className="absolute top-[125px] left-[680px]"><FlowNode label="Game Page" /></div>
-                        <div className="absolute top-[200px] left-[680px]"><FlowNode label="Hardware" showAccent /></div>
-                        <div className="absolute top-[350px] left-[680px]"><FlowNode label="Quick View" /></div>
-                        <div className="absolute top-[200px] left-[850px]"><FlowNode label="Checkout" showAccent /></div>
+                        <div className="absolute top-[175px] left-0">
+                            {project.userFlowSteps[0] && <FlowNode label={project.userFlowSteps[0].title} image={project.userFlowSteps[0].image} />}
+                        </div>
+                        <div className="absolute top-[175px] left-[170px]">
+                            {project.userFlowSteps[1] && <FlowNode label={project.userFlowSteps[1].title} image={project.userFlowSteps[1].image} showAccent />}
+                        </div>
+                        
+                        {/* Column 3 - Branch */}
+                        <div className="absolute top-[100px] left-[340px]">
+                            {project.userFlowSteps[2] && <FlowNode label={project.userFlowSteps[2].title} image={project.userFlowSteps[2].image} />}
+                        </div>
+                        <div className="absolute top-[250px] left-[340px]">
+                            {project.userFlowSteps[3] && <FlowNode label={project.userFlowSteps[3].title} image={project.userFlowSteps[3].image} showAccent />}
+                        </div>
+
+                        {/* Column 4 - Detailed Branch */}
+                        <div className="absolute top-[25px] left-[510px]">
+                            {project.userFlowSteps[4] && <FlowNode label={project.userFlowSteps[4].title} image={project.userFlowSteps[4].image} />}
+                        </div>
+                        <div className="absolute top-[125px] left-[510px]">
+                            {project.userFlowSteps[5] && <FlowNode label={project.userFlowSteps[5].title} image={project.userFlowSteps[5].image} showAccent />}
+                        </div>
+                        <div className="absolute top-[225px] left-[510px]">
+                            {project.userFlowSteps[6] && <FlowNode label={project.userFlowSteps[6].title} image={project.userFlowSteps[6].image} />}
+                        </div>
+                        
+                        {/* Final node */}
+                        <div className="absolute top-[175px] left-[850px]">
+                            {project.userFlowSteps[project.userFlowSteps.length - 1] && 
+                             project.userFlowSteps.length > 4 &&
+                             <FlowNode label={project.userFlowSteps[project.userFlowSteps.length - 1].title} image={project.userFlowSteps[project.userFlowSteps.length - 1].image} showAccent />}
+                        </div>
                     </div>
 
                     {/* Mobile View */}
@@ -293,12 +349,16 @@ export default function ProjectPage() {
     );
 }
 
-const FlowNode = ({ label, showAccent = false, wide = false }: { label: string; showAccent?: boolean; wide?: boolean }) => (
+const FlowNode = ({ label, image, showAccent = false, wide = false }: { label: string; image?: string; showAccent?: boolean; wide?: boolean }) => (
     <div className={`h-36 bg-white border border-[#e5e5e5] p-2 flex flex-col items-center justify-between shadow-sm group hover:shadow-md transition-shadow ${wide ? "w-full" : "w-28"}`}>
-        <div className="w-full aspect-[4/3] bg-gray-50 flex items-center justify-center p-2">
-            <svg className="w-full h-full text-gray-200" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c0 1.1-.9-2-2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-            </svg>
+        <div className="w-full aspect-[4/3] bg-gray-50 flex items-center justify-center p-2 relative">
+            {image ? (
+                <Image src={image} alt={label} fill className="object-cover grayscale group-hover:grayscale-0 transition-opacity duration-500 opacity-60 group-hover:opacity-100" />
+            ) : (
+                <svg className="w-full h-full text-gray-200" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c0 1.1-.9-2-2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+                </svg>
+            )}
         </div>
         <div className="w-full flex flex-col gap-1 mt-2">
             <div className="w-3/4 h-[2px] bg-gray-100" />

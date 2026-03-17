@@ -195,6 +195,23 @@ body {
   .wait-for-animation {
     opacity: 0;
   }
+
+  .animate-signal {
+    stroke-dasharray: 150, 600;
+    animation: signalMove 12s linear infinite;
+    filter: drop-shadow(0 0 5px #ff5252) drop-shadow(0 0 15px #ff5252);
+    stroke: #ffffff; /* Bright white core for maximum glow contrast */
+    stroke-width: 4;
+  }
+}
+
+@keyframes signalMove {
+  from {
+    stroke-dashoffset: 800;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .font-vector {
