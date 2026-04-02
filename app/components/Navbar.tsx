@@ -2,15 +2,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 
 type DropdownItem = { label: string; href: string };
 type NavItem = { label: string; href: string; dropdown?: DropdownItem[] };
 
 const navItems: NavItem[] = [
-    { label: "HOME", href: "#" },
+    { label: "HOME", href: "/" },
     {
         label: "WORK",
-        href: "#work",
+        href: "/work",
         dropdown: [
             { label: "BRANDING", href: "#branding" },
             { label: "VIDEO", href: "#video" },
@@ -19,7 +20,7 @@ const navItems: NavItem[] = [
     },
     {
         label: "SERVICES",
-        href: "#services",
+        href: "/services",
         dropdown: [
             { label: "VIDEO PRODUCTION", href: "#video-production" },
             { label: "MOTION GRAPHICS", href: "#motion" },
@@ -27,14 +28,15 @@ const navItems: NavItem[] = [
             { label: "DEV & TECH", href: "#dev" },
         ],
     },
-    { label: "ABOUT", href: "#about" },
-    { label: "CONTACT", href: "#contact" },
+    { label: "MEET THE TEAM", href: "/team" },
+    { label: "CONTACT", href: "/contact" },
 ];
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -70,7 +72,7 @@ export default function Navbar() {
                 >
                     {/* ── Logo ── */}
                     <Link
-                        href="#"
+                        href="/"
                         className="flex items-center gap-1.5 pr-4 border-r border-[#e5e5e5] mr-1 group"
                     >
                         {/* Tiny logomark: square with red dot */}
@@ -158,6 +160,7 @@ export default function Navbar() {
                         {/* Search */}
                         <button
                             aria-label="Search"
+                            onClick={() => setSearchOpen(true)}
                             className="hidden md:flex w-8 h-8 items-center justify-center text-[#1a1a1a] hover:text-[#d32f2f] transition-colors duration-200 rounded-full"
                         >
                             <svg
@@ -198,7 +201,6 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* ── Mobile dropdown (full-width pill-style panel) ── */}
                 <div
                     className={`
             pointer-events-auto absolute top-[52px] left-4 right-4
@@ -242,6 +244,108 @@ export default function Navbar() {
                     </nav>
                 </div>
             </header>
+
+            {/* ── Search Overlay ── */}
+            <AnimatePresence>
+                {searchOpen && (
+                    <motion.div 
+                        initial={{ opacity: 0, clipPath: "circle(0% at 85% 10%)" }}
+                        animate={{ opacity: 1, clipPath: "circle(150% at 85% 10%)" }}
+                        exit={{ opacity: 0, clipPath: "circle(0% at 85% 10%)" }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        className="fixed inset-0 z-[10000] bg-[#f8f8f8] grid-bg flex flex-col justify-between overflow-hidden font-jost"
+                    >
+                        {/* Top Bar for Overlay */}
+                        <div className="flex justify-between items-center px-6 md:px-12 py-8 w-full absolute top-0 left-0 z-50">
+                            <div className="text-[9px] font-black tracking-[0.2em] uppercase text-[#1a1a1a]/40 flex gap-4 md:gap-8 flex-wrap">
+                                <span className="hidden md:inline">Branding</span>
+                                <span className="hidden md:inline">Interactive</span>
+                                <span className="hidden md:inline">Video Production</span>
+                                <span className="text-[#d32f2f]">Query Index</span>
+                            </div>
+                            <button 
+                                onClick={() => setSearchOpen(false)}
+                                className="w-12 h-12 flex items-center justify-center text-[#1a1a1a] hover:text-[#d32f2f] transition-all hover:rotate-90 duration-300 pointer-events-auto cursor-pointer border border-[#1a1a1a]/10 hover:border-[#d32f2f] rounded-full bg-white/50 backdrop-blur-sm"
+                            >
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            </button>
+                        </div>
+
+                        {/* Red Accent Elements (Replicating the Graphic) */}
+                        <div className="absolute top-[25%] right-[25%] w-16 h-16 bg-[#d32f2f] z-10 pointer-events-none md:block hidden">
+                            <span className="absolute -top-5 left-0 text-[8px] font-black uppercase tracking-widest text-[#d32f2f]">Target</span>
+                        </div>
+                        <div className="absolute bottom-[20%] left-[30%] w-24 h-24 bg-[#d32f2f] z-10 pointer-events-none flex items-end p-2 md:block hidden">
+                            <span className="text-[8px] font-black uppercase tracking-widest text-white leading-tight">Match<br/>Found</span>
+                        </div>
+                        
+                        {/* Red Vertical Guide Line */}
+                        <div className="absolute top-[10%] bottom-[10%] right-[35%] w-[1px] bg-[#d32f2f] z-10 pointer-events-none opacity-50 hidden lg:block" />
+                        <div className="absolute top-[15%] left-[20%] w-[20px] h-[1px] bg-[#1a1a1a] z-10 pointer-events-none hidden md:block" />
+
+                        {/* Giant Input Area */}
+                        <div className="flex-grow flex flex-col items-center justify-center relative z-20 mt-10 w-full pointer-events-none">
+                            
+                            <div className="absolute top-[30%] left-[10%] md:left-[20%] text-[8px] font-black text-[#1a1a1a]/50 uppercase w-[150px] text-left leading-relaxed">
+                                Enter your <span className="text-[#d32f2f]">vision</span> to initialize a global search across all portfolios.
+                            </div>
+
+                            <div className="relative w-full flex justify-center perspective-[1000px] pointer-events-auto px-4 cursor-text">
+                                <motion.input 
+                                    type="text"
+                                    autoFocus
+                                    placeholder="DISCOVER"
+                                    initial={{ rotateX: 20, scale: 0.95, opacity: 0 }}
+                                    animate={{ rotateX: 0, scale: 1, opacity: 1 }}
+                                    transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                                    className="w-full bg-transparent outline-none text-center font-black uppercase text-[#1a1a1a] placeholder:text-[#1a1a1a]/10 placeholder:italic transition-all duration-300"
+                                    style={{ 
+                                        lineHeight: "0.85",
+                                        letterSpacing: "-0.08em",
+                                        transformStyle: "preserve-3d"
+                                    }}
+                                />
+                                {/* Add CSS via a style tag for the dynamic font size based on viewport */}
+                                <style dangerouslySetInnerHTML={{__html: `
+                                    input::-webkit-input-placeholder { opacity: 0.7; }
+                                    input { font-size: min(22vw, 250px); }
+                                    @media (max-width: 768px) { input { font-size: 15vw; } }
+                                `}} />
+                            </div>
+                            
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5, duration: 0.8 }}
+                                className="mt-16 md:mt-24 text-[10px] sm:text-[12px] font-black uppercase tracking-widest text-[#1a1a1a]/30 flex items-center gap-3 md:gap-5"
+                            >
+                                <span>Press</span>
+                                <span className="px-4 py-2 border-2 border-[#1a1a1a]/20 rounded-md text-[#d32f2f]">Enter</span>
+                                <span>to search</span>
+                            </motion.div>
+                        </div>
+
+                        {/* Bottom Footer Elements */}
+                        <div className="w-full px-6 md:px-12 py-8 flex flex-col sm:flex-row justify-between absolute bottom-0 left-0 z-50 overflow-hidden pointer-events-none gap-4">
+                            <div className="flex flex-col">
+                                <span className="text-[10px] font-black uppercase text-[#d32f2f] flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#d32f2f] animate-pulse" />
+                                    System Active
+                                </span>
+                                <span className="text-[8px] font-bold text-[#1a1a1a]/50 max-w-[200px] mt-1.5 uppercase tracking-widest leading-relaxed hidden sm:block">
+                                    Awaiting input for project index retrieval protocol.
+                                </span>
+                            </div>
+                            <div className="flex flex-col sm:text-right">
+                                <span className="text-[10px] font-black uppercase text-[#1a1a1a]">Coordinates</span>
+                                <span className="text-[8px] font-bold text-[#1a1a1a]/50 mt-1.5 uppercase tracking-widest font-mono">
+                                    40&deg;42&apos;46&quot;N 74&deg;0&apos;21&quot;W
+                                </span>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }

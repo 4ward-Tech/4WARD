@@ -2,7 +2,6 @@ import Image from "next/image";
 import Services from "./components/Services";
 import FeaturedProjects from "./components/FeaturedProjects";
 import ProcessWorkflow from "./components/ProcessWorkflow";
-
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full bg-[#f8f8f8] grid-bg font-jost text-[#1a1a1a] overflow-x-hidden">
@@ -112,19 +111,31 @@ export default function Home() {
         {/* Middle Typography Section - Centered Vertically and Horizontally */}
         <div className="relative flex-1 z-50 animate-push-down-text delay-push flex items-center justify-center w-full">
           <h1 className="flex flex-col select-none items-center text-center">
-            <span className="text-[5rem] md:text-[9rem] font-black leading-[0.7] tracking-tighter uppercase flex justify-center">
+            <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-[1px] bg-[#d32f2f]/50" />
+                <span className="text-[10px] font-black tracking-[0.4em] text-[#d32f2f] uppercase block">
+                    Welcome
+                </span>
+            </div>
+            <span className="text-[5rem] md:text-[9rem] font-black leading-[0.8] tracking-tighter uppercase flex justify-center z-10 relative">
               {"4WARD".split("").map((char, i) => (
                 <span
                   key={i}
                   className={`animate-letter-in ${char.toLowerCase() === "w" || char.toLowerCase() === "r"
                     ? "text-[#d32f2f]"
-                    : ""
+                    : "text-[#1a1a1a]"
                     }`}
                   style={{ animationDelay: `${i * 0.2}s` }}
                 >
                   {char}
                 </span>
               ))}
+            </span>
+            <span 
+               className="text-[4rem] md:text-[8rem] font-black leading-[0.7] tracking-tighter uppercase z-20 -mt-6 md:-mt-12 text-outline" 
+               style={{ WebkitTextStroke: "2px #1a1a1a", opacity: 0, animation: "fadeIn 1s ease-out 1.2s forwards" }}
+            >
+              AGENCY
             </span>
           </h1>
         </div>

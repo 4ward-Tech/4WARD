@@ -109,7 +109,7 @@ export default function AboutCarousel() {
                     <div className="relative w-full h-[400px] flex gap-6 items-center overflow-visible">
                         {carouselItems.map((item, index) => {
                             // Calculate relative position to active index
-                            let diff = (index - activeIndex + carouselItems.length) % carouselItems.length;
+                            const diff = (index - activeIndex + carouselItems.length) % carouselItems.length;
 
                             const isActive = diff === 0;
                             const isNext = diff === 1;

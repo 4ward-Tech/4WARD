@@ -378,7 +378,7 @@ export default function ProjectPage() {
                             
                             <div className="space-y-6">
                                 <div className="flex gap-5 items-start group">
-                                    <div className="w-9 h-9 border border-[#1a1a1a]/10 flex items-center justify-center bg-white shadow-sm transition-all duration-500 hover:text-white" style={{ ['--hover-bg' as any]: project.accentColor }}>
+                                    <div className="w-9 h-9 border border-[#1a1a1a]/10 flex items-center justify-center bg-white shadow-sm transition-all duration-500 hover:text-white" style={{ '--hover-bg': project.accentColor } as React.CSSProperties}>
                                         <style jsx>{`
                                             div:hover { background-color: ${project.accentColor} !important; border-color: ${project.accentColor} !important; }
                                         `}</style>
@@ -489,11 +489,7 @@ const FlowNode = ({ label, image, showAccent = false, wide = false }: { label: s
     </div>
 );
 
-const DeviceMockup = ({ children }: { children: React.ReactNode }) => (
-    <div className="relative mx-auto w-[300px] h-[600px] bg-black rounded-[3rem] border-[12px] border-[#1a1a1a] shadow-2xl overflow-hidden">
-        {children}
-    </div>
-);
+
 
 function Model({ url }: { url: string }) {
     const { scene } = useGLTF(url, "https://www.gstatic.com/draco/versioned/decoders/1.5.5/");
