@@ -3,72 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const workflowSteps = [
-    {
-        phase: "EXPLORATION PHASE",
-        duration: "1 WEEKS",
-        title: "Discovery",
-        description: "Initial exploration to find the best solution.",
-        details: [
-            {
-                label: "PROBLEM SPACE",
-                icon: "P",
-                iconColor: "#d32f2f",
-                items: ["Define problem & success metrics."]
-            },
-            {
-                label: "FEEDBACK",
-                icon: "F",
-                iconColor: "#1a1a1a",
-                items: ["Brainstorm audience needs."]
-            }
-        ]
-    },
-    {
-        phase: "REFINEMENT PHASE",
-        duration: "1-2 WEEKS",
-        title: "Design",
-        description: "Executing core creative design concepts.",
-        details: [
-            {
-                label: "DESIGNING MOCKS",
-                icon: "D",
-                iconColor: "#d32f2f",
-                items: ["Iteration on visual concepts."]
-            }
-        ]
-    },
-    {
-        phase: "REFINEMENT PHASE",
-        duration: "1-2 WEEKS",
-        title: "Approval",
-        description: "Stakeholder review and final direction.",
-        details: [
-            {
-                label: "SOLIDIFY DIRECTION",
-                icon: "S",
-                iconColor: "#1a1a1a",
-                items: ["Stakeholder feedback loop."]
-            }
-        ]
-    },
-    {
-        phase: "DEVELOPMENT PHASE",
-        duration: "2 WEEKS",
-        title: "Build",
-        description: "Handoff and implementation support.",
-        details: [
-            {
-                label: "ASSET DELIVERY",
-                icon: "E",
-                iconColor: "#1a1a1a",
-                items: ["Polished assets delivery."]
-            }
-        ]
-    }
-];
+import { ProcessStep } from "@prisma/client";
 
-export default function ProcessWorkflow() {
+export default function ProcessWorkflow({ initialSteps }: { initialSteps: ProcessStep[] }) {
+    const workflowSteps = initialSteps;
     const [activeStep, setActiveStep] = useState(0);
 
     useEffect(() => {
@@ -182,7 +120,7 @@ export default function ProcessWorkflow() {
 
                             {/* Minimalist Sub-details */}
                             <div className="space-y-6">
-                                {step.details.map((detail, dIdx) => (
+                                {(step.details as any[] || []).map((detail: any, dIdx: number) => (
                                     <motion.div 
                                         key={dIdx}
                                         animate={{ 
