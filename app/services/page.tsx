@@ -1,10 +1,61 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
+const feedbacks = [
+    {
+        id: 1,
+        quote: "They exceeded my expectations! We commissioned them to design and build a sustainable platform for our project, and the result was amazing. They implemented advanced technology and created a beautiful interface.",
+        name: "Jeremy",
+        role: "Manager",
+    },
+    {
+        id: 2,
+        quote: "The 4WARD team transformed our visual identity within weeks. Their ability to fuse high-end 3D graphics with seamless web experiences is unmatched. We saw a completely massive increase in user engagement.",
+        name: "Samantha",
+        role: "Creative Director",
+    },
+    {
+        id: 3,
+        quote: "Professional, punctual, and visionary. They didn't just build us an app; they built us a complete digital ecosystem. The video production quality alone was worth the entire investment.",
+        name: "Marcus",
+        role: "Founder",
+    }
+];
 
 export default function ServicesPage() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [direction, setDirection] = useState(1);
+
+    const slideVariants = {
+        enter: (dir: number) => ({
+            x: dir > 0 ? 100 : -100,
+            opacity: 0,
+        }),
+        center: {
+            zIndex: 1,
+            x: 0,
+            opacity: 1,
+        },
+        exit: (dir: number) => ({
+            zIndex: 0,
+            x: dir < 0 ? 100 : -100,
+            opacity: 0,
+        })
+    };
+
+    const nextFeedback = () => {
+        setDirection(1);
+        setCurrentIndex((prev) => (prev + 1) % feedbacks.length);
+    };
+
+    const prevFeedback = () => {
+        setDirection(-1);
+        setCurrentIndex((prev) => (prev - 1 + feedbacks.length) % feedbacks.length);
+    };
+
     return (
         <main className="min-h-screen bg-[#f8f8f8] grid-bg font-jost text-[#1a1a1a] pt-16 pb-24 px-6 md:px-16 overflow-x-hidden">
             {/* Services Minimal Grid Section */}
@@ -104,8 +155,8 @@ export default function ServicesPage() {
                 </div>
             </section>
 
-            {/* Testimonials Section */}
-            <section className="max-w-[800px] mx-auto text-center relative z-20 pt-10">
+            {/* Testimonials Section (Interactive Carousel) */}
+            <section className="max-w-[800px] mx-auto text-center relative z-20 pt-10 pb-10">
                 <motion.h2 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -117,38 +168,45 @@ export default function ServicesPage() {
                 </motion.h2>
                 
                 <div className="flex justify-center gap-4 mb-10">
-                    <button className="w-8 h-8 rounded-full border border-[#1a1a1a]/20 flex items-center justify-center hover:border-[#d32f2f] hover:text-[#d32f2f] transition-all duration-300">
+                    <button onClick={prevFeedback} className="w-8 h-8 rounded-full border border-[#1a1a1a]/20 flex items-center justify-center hover:border-[#d32f2f] hover:text-[#d32f2f] transition-all duration-300">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" strokeWidth={2}/></svg>
                     </button>
-                    <button className="w-8 h-8 rounded-full bg-[#1a1a1a] text-white flex items-center justify-center hover:bg-[#d32f2f] transition-all duration-300 shadow-md">
+                    <button onClick={nextFeedback} className="w-8 h-8 rounded-full bg-[#1a1a1a] text-white flex items-center justify-center hover:bg-[#d32f2f] transition-all duration-300 shadow-md">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18l6-6-6-6" strokeWidth={2}/></svg>
                     </button>
                 </div>
 
-                {/* Testimonial Card */}
-                <motion.div 
-                    initial={{ scale: 0.98, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                    className="bg-white rounded-sm p-10 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-[#1a1a1a]/10 text-left relative max-w-[650px] mx-auto group hover:border-[#d32f2f]/30 transition-colors duration-500 ring-1 ring-[#1a1a1a]/5"
-                >
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[1px] w-10 h-1 bg-[#d32f2f] opacity-20 group-hover:opacity-100 transition-opacity" />
-                    <p className="text-sm text-[#1a1a1a]/70 leading-relaxed font-bold italic mb-10 border-l border-[#d32f2f]/20 pl-6">
-                        &quot;They exceeded my expectations! We commissioned them to design and build a sustainable platform for our project, and the result was amazing. They implemented advanced technology and created a beautiful interface.&quot;
-                    </p>
-                    <div className="flex items-center gap-4 pl-6">
-                        <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-[#1a1a1a]/10 relative bg-[#f8f8f8]">
-                            <div className="absolute inset-0 bg-[#d32f2f]/5" />
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-[#1a1a1a]/80 rounded-t-full" />
-                            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#1a1a1a]/80 rounded-full" />
-                        </div>
-                        <div>
-                            <h4 className="font-black text-xs uppercase tracking-tight text-[#1a1a1a]">Jeremy</h4>
-                            <p className="text-[9px] uppercase tracking-[0.2em] text-[#1a1a1a]/40 font-bold">Manager</p>
-                        </div>
-                    </div>
-                </motion.div>
+                {/* Testimonial Active Slider */}
+                <div className="relative mx-auto max-w-[650px] min-h-[220px]">
+                    <AnimatePresence mode="wait" custom={direction}>
+                        <motion.div 
+                            key={currentIndex}
+                            custom={direction}
+                            variants={slideVariants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
+                            className="bg-white rounded-sm p-10 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-[#1a1a1a]/10 text-left group hover:border-[#d32f2f]/30 transition-colors duration-500 ring-1 ring-[#1a1a1a]/5 relative"
+                        >
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[1px] w-10 h-1 bg-[#d32f2f] opacity-20 group-hover:opacity-100 transition-opacity" />
+                            <p className="text-sm text-[#1a1a1a]/70 leading-relaxed font-bold italic mb-10 border-l border-[#d32f2f]/20 pl-6">
+                                &quot;{feedbacks[currentIndex].quote}&quot;
+                            </p>
+                            <div className="flex items-center gap-4 pl-6">
+                                <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-[#1a1a1a]/10 relative bg-[#f8f8f8]">
+                                    <div className="absolute inset-0 bg-[#d32f2f]/5" />
+                                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-[#1a1a1a]/80 rounded-t-full" />
+                                    <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#1a1a1a]/80 rounded-full" />
+                                </div>
+                                <div>
+                                    <h4 className="font-black text-xs uppercase tracking-tight text-[#1a1a1a]">{feedbacks[currentIndex].name}</h4>
+                                    <p className="text-[9px] uppercase tracking-[0.2em] text-[#1a1a1a]/40 font-bold">{feedbacks[currentIndex].role}</p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
             </section>
         </main>
     );

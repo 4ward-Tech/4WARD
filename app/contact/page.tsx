@@ -1,175 +1,113 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-const locations = [
-  "amsterdam",
-  "shanghai",
-  "hong kong",
-  "frankfurt",
-  "dubai",
-  "melbourne",
-];
-
-const locationData: Record<string, any> = {
-  amsterdam: {
-    visiting: "Stadhouderskade 113 1073 AX Amsterdam \n The Netherlands",
-    post: "PO Box 75381 1070 AS Amsterdam \n The Netherlands",
-    phone: "T +31 20 570 20 40 \n F +31 20 570 20 41",
-    email: "info@4ward.studio",
-    hr: "hr@4ward.studio",
-    map: "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=Stadhouderskade%20113,%20Amsterdam&t=&z=14&ie=UTF8&iwloc=B&output=embed",
-    parking: "Indoor car park: Nicole de van der Helststraat (200m from 4WARD office). Open 24 hours a day / 7 days a week. € 2.00 per 15mins or part thereof. Maximum day rate €60.",
-    transport: "Tram number 4 \n Stop: Stadhouderskade",
-  },
-  shanghai: {
-    visiting: "No. 800 Changde Road, Jing'an District \n Shanghai, China",
-    post: "No. 800 Changde Road, Jing'an District \n Shanghai, China",
-    phone: "T +86 21 6135 1900 \n F +86 21 6135 1901",
-    email: "shanghai@4ward.studio",
-    hr: "hr.shanghai@4ward.studio",
-    map: "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=800%20Changde%20Road,%20Shanghai&t=&z=14&ie=UTF8&iwloc=B&output=embed",
-    parking: "On-site parking available at 800 Changde Road compound. Hourly rates apply.",
-    transport: "Metro Line 7 \n Station: Changping Road",
-  },
-  "hong kong": {
-    visiting: "Unit 2, 12/F, 69 Jervois Street \n Sheung Wan, Hong Kong",
-    post: "Unit 2, 12/F, 69 Jervois Street \n Sheung Wan, Hong Kong",
-    phone: "T +852 3468 5350 \n F +852 3468 5351",
-    email: "hk@4ward.studio",
-    hr: "hr.hk@4ward.studio",
-    map: "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=69%20Jervois%20Street,%20Hong%20Kong&t=&z=14&ie=UTF8&iwloc=B&output=embed",
-    parking: "Public parking available at The Center or Rumsey Street Multi-storey Car Park.",
-    transport: "MTR Island Line \n Station: Sheung Wan (Exit A2)",
-  },
-  frankfurt: {
-    visiting: "Hanauer Landstraße 135-137 \n 60314 Frankfurt am Main, Germany",
-    post: "Hanauer Landstraße 135-137 \n 60314 Frankfurt am Main, Germany",
-    phone: "T +49 69 900 286 0 \n F +49 69 900 286 66",
-    email: "frankfurt@4ward.studio",
-    hr: "hr.frankfurt@4ward.studio",
-    map: "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=Hanauer%20Landstrasse%20135,%20Frankfurt&t=&z=14&ie=UTF8&iwloc=B&output=embed",
-    parking: "Visitor parking spaces in the courtyard entrance Hanauer Landstraße 135.",
-    transport: "Tram 11 or 12 \n Stop: Osthafenplatz",
-  },
-  dubai: {
-    visiting: "Office 102, Building 6, Dubai Design District \n Dubai, UAE",
-    post: "PO Box 333240 \n Dubai, UAE",
-    phone: "T +971 4 564 5840 \n F +971 4 564 5841",
-    email: "dubai@4ward.studio",
-    hr: "hr.dubai@4ward.studio",
-    map: "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=Dubai%20Design%20District&t=&z=14&ie=UTF8&iwloc=B&output=embed",
-    parking: "Multi-story basement parking in d3. Free for first 3 hours.",
-    transport: "Bus Line 66, 67 \n Stop: Dubai Design District",
-  },
-  melbourne: {
-    visiting: "Level 4, 11-19 Bank Place \n Melbourne VIC 3000, Australia",
-    post: "Level 4, 11-19 Bank Place \n Melbourne VIC 3000, Australia",
-    phone: "T +61 3 9600 0010 \n F +61 3 9600 0011",
-    email: "melbourne@4ward.studio",
-    hr: "hr.melbourne@4ward.studio",
-    map: "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=19%20Bank%20Place,%20Melbourne&t=&z=14&ie=UTF8&iwloc=B&output=embed",
-    parking: "Public car parks available at 459 Collins Street or Galleria Parking.",
-    transport: "Train to Flinders Street Station \n Tram 19, 57 or 59 to Elizabeth St",
-  },
-};
-
 export default function ContactPage() {
-  const [activeLocation, setActiveLocation] = useState("amsterdam");
-  const data = locationData[activeLocation];
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 md:px-12 lg:px-24 grid-bg font-jost overflow-x-hidden">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-12"
-        >
-          <h1 className="text-[12vw] md:text-[10vw] font-black leading-[0.8] uppercase tracking-tighter text-[#1a1a1a] mb-8">
-            CONTACT
-          </h1>
-
-          {/* Location Tabs */}
-          <div className="flex flex-wrap gap-x-6 gap-y-2 mb-12">
-            {locations.map((loc) => (
-              <button
-                key={loc}
-                onClick={() => setActiveLocation(loc)}
-                className={`text-[10px] md:text-[12px] font-black uppercase tracking-widest transition-all duration-300 ${
-                  activeLocation === loc
-                    ? "text-[#d32f2f]"
-                    : "text-[#1a1a1a]/40 hover:text-[#1a1a1a]"
-                }`}
-              >
-                {activeLocation === loc ? `[${loc}]` : loc}
-              </button>
-            ))}
+    <main className="min-h-screen pt-32 md:pt-40 pb-20 px-6 md:px-12 lg:px-24 grid-bg font-jost overflow-x-hidden flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto w-full">
+        {/* New Stylised Contact Hero Section */}
+        <section className="relative mb-32 group">
+          {/* Big Background Text */}
+          <div className="absolute -top-10 -left-4 md:-left-10 select-none pointer-events-none z-0 overflow-hidden w-full h-[300px] md:h-[350px]">
+            <span className="text-[18.5vw] whitespace-nowrap font-black text-[#1a1a1a]/5 uppercase leading-none tracking-tighter block translate-y-10 group-hover:translate-y-0 transition-transform duration-1000">
+              Contact
+            </span>
           </div>
 
-          <p className="max-w-3xl text-lg md:text-xl font-bold leading-tight text-[#1a1a1a] mb-16 uppercase tracking-tight">
-            A full-service branding and digital design network in six locations
-            in Amsterdam, Shanghai, Hong Kong, Frankfurt, Dubai and Melbourne.
-          </p>
-        </motion.div>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 pt-4">
+            {/* Left Sidebar: Enquiries & Info */}
+            <div className="lg:col-span-4 flex flex-col gap-12 order-2 lg:order-1 lg:border-r lg:border-[#1a1a1a]/10 pr-12 pb-12">
+              <div className="flex flex-col gap-4">
+                <button className="flex items-center gap-4 bg-[#1a1a1a] text-white px-6 py-3 rounded-full self-start hover:bg-[#d32f2f] transition-colors group/btn">
+                  <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a] group-hover/btn:bg-[#d32f2f]" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest">Retail Enquiries</span>
+                </button>
+                <button className="flex items-center gap-4 bg-white border border-[#1a1a1a]/10 text-[#1a1a1a] px-6 py-3 rounded-full self-start hover:border-[#1a1a1a] transition-colors group/btn">
+                  <div className="w-5 h-5 rounded-full bg-[#1a1a1a]/5 flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a]/20" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/40">Join Mailing List</span>
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[8px] font-black text-[#d32f2f] uppercase tracking-widest">Global HQ</span>
+                  <p className="text-[11px] font-black text-[#1a1a1a]/80 leading-relaxed uppercase tracking-tight">
+                    +250 788 000 000 <br />
+                    KK 31 ST, Kicukiro District <br />
+                    Kigali, Rwanda <br />
+                    PO Box 4410
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-auto hidden lg:block">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-[1px] bg-[#d32f2f]" />
+                  <span className="text-[9px] font-black uppercase tracking-[0.4em] text-[#d32f2f]">4WARD.TECH</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side: The Form */}
+            <div className="lg:col-span-8 order-1 lg:order-2">
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                <div className="flex flex-col gap-2 group/field">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/60 group-focus-within/field:text-[#d32f2f] transition-colors">Name</label>
+                  <input type="text" className="bg-[#1a1a1a]/[0.02] border-b-2 border-[#1a1a1a]/20 outline-none p-3 text-sm font-bold text-[#1a1a1a] focus:border-[#d32f2f] focus:bg-[#d32f2f]/[0.02] transition-all" />
+                </div>
+                <div className="flex flex-col gap-2 group/field">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/60 group-focus-within/field:text-[#d32f2f] transition-colors">Company</label>
+                  <input type="text" className="bg-[#1a1a1a]/[0.02] border-b-2 border-[#1a1a1a]/20 outline-none p-3 text-sm font-bold text-[#1a1a1a] focus:border-[#d32f2f] focus:bg-[#d32f2f]/[0.02] transition-all" />
+                </div>
+                <div className="flex flex-col gap-2 group/field">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/60 group-focus-within/field:text-[#d32f2f] transition-colors">Email</label>
+                  <input type="email" className="bg-[#1a1a1a]/[0.02] border-b-2 border-[#1a1a1a]/20 outline-none p-3 text-sm font-bold text-[#1a1a1a] focus:border-[#d32f2f] focus:bg-[#d32f2f]/[0.02] transition-all" />
+                </div>
+                <div className="flex flex-col gap-2 group/field">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/60 group-focus-within/field:text-[#d32f2f] transition-colors">Phone</label>
+                  <input type="tel" className="bg-[#1a1a1a]/[0.02] border-b-2 border-[#1a1a1a]/20 outline-none p-3 text-sm font-bold text-[#1a1a1a] focus:border-[#d32f2f] focus:bg-[#d32f2f]/[0.02] transition-all" />
+                </div>
+                <div className="md:col-span-2 flex flex-col gap-2 mt-4 group/field">
+                  <label className="text-xl md:text-2xl font-black text-[#1a1a1a] tracking-tighter">Want to know more? Drop us a line!</label>
+                  <textarea className="bg-[#1a1a1a]/[0.02] border-b-2 border-[#1a1a1a]/20 outline-none p-4 text-sm font-bold text-[#1a1a1a] focus:border-[#d32f2f] focus:bg-[#d32f2f]/[0.02] transition-all resize-none min-h-[80px]" />
+                </div>
+
+                <div className="md:col-span-2 flex flex-col md:flex-row items-center justify-between gap-8 pt-2">
+                  {/* Mock Captcha */}
+                  <div className="flex items-center gap-4 bg-white border border-[#1a1a1a]/5 p-4 rounded-sm shadow-sm">
+                    <div className="w-6 h-6 border border-[#1a1a1a]/20 rounded-sm" />
+                    <span className="text-[10px] font-bold text-[#1a1a1a]/40 uppercase tracking-widest italic">Verification Required</span>
+                  </div>
+
+                  <button type="button" className="flex items-center gap-6 bg-[#1a1a1a] text-white pl-4 pr-10 py-4 rounded-full hover:bg-[#d32f2f] transition-all transform hover:scale-[1.05] group/send">
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#1a1a1a] group-hover/send:bg-[#d32f2f] animate-pulse" />
+                    </div>
+                    <span className="text-[12px] font-black uppercase tracking-[0.3em]">Send Request</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
 
         {/* Details Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 border-t border-[#e5e5e5] pt-12">
-          {/* Address Section */}
-          <div className="md:col-span-4 text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/40">
-            Address
-          </div>
-          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8 text-[#1a1a1a]">
-            <div>
-              <h3 className="text-[9px] font-black uppercase text-[#1a1a1a]/60 mb-3 tracking-widest">
-                Visiting address
-              </h3>
-              <p className="text-[13px] font-bold leading-normal uppercase whitespace-pre-line">
-                {data.visiting}
-              </p>
-            </div>
-            <div>
-              <h3 className="text-[9px] font-black uppercase text-[#1a1a1a]/60 mb-3 tracking-widest">
-                Post address
-              </h3>
-              <p className="text-[13px] font-bold leading-normal uppercase whitespace-pre-line">
-                {data.post}
-              </p>
-            </div>
-          </div>
-
-          {/* Map Section */}
-          <div className="md:col-start-5 md:col-span-8 my-8 transition-all duration-500">
-            <div className="relative aspect-[16/7] bg-[#eee] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 rounded-sm group">
-                <div className="absolute inset-0 bg-[#d32f2f]/5 mix-blend-multiply transition-opacity group-hover:opacity-0 pointer-events-none" />
-                <iframe 
-                    key={activeLocation}
-                    width="100%" 
-                    height="100%" 
-                    frameBorder="0" 
-                    scrolling="no" 
-                    marginHeight={0} 
-                    marginWidth={0} 
-                    src={data.map}
-                    className="filter contrast-125 brightness-105"
-                ></iframe>
-            </div>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 border-t border-[#1a1a1a]/10 pt-12 mt-12 pb-24">
           {/* Communications Section */}
-          <div className="md:col-span-4 text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/40 mt-12">
+          <div className="md:col-span-4 text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/40">
             Communications
           </div>
-          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-12 mt-12 text-[#1a1a1a]">
+          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-12 text-[#1a1a1a]">
             <div>
               <h3 className="text-[9px] font-black uppercase text-[#1a1a1a]/60 mb-3 tracking-widest">
                 Phone
               </h3>
               <p className="text-[13px] font-bold leading-normal uppercase whitespace-pre-line">
-                {data.phone}
+                +250 788 000 000
               </p>
             </div>
             <div>
@@ -177,7 +115,7 @@ export default function ContactPage() {
                 General Information
               </h3>
               <p className="text-[13px] font-bold leading-normal uppercase text-[#d32f2f] hover:underline cursor-pointer">
-                {data.email}
+                info@4ward.tech
               </p>
             </div>
             <div className="sm:col-start-2">
@@ -185,42 +123,20 @@ export default function ContactPage() {
                 Human Resources
               </h3>
               <p className="text-[13px] font-bold leading-normal uppercase text-[#d32f2f] hover:underline cursor-pointer">
-                {data.hr}
+                hr@4ward.tech
               </p>
             </div>
           </div>
 
           {/* Statutory Section */}
-          <div className="md:col-span-4 text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/40 mt-12 border-t border-[#e5e5e5] pt-12">
+          <div className="md:col-span-4 text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/40 mt-12 border-t border-[#1a1a1a]/10 pt-12">
             Statutory company name
           </div>
-          <div className="md:col-span-8 mt-12 border-t border-[#e5e5e5] pt-12">
+          <div className="md:col-span-8 mt-12 border-t border-[#1a1a1a]/10 pt-12">
             <p className="text-[13px] font-bold leading-normal uppercase">
-              U-Studio B.V. <br /> 4WARD Design Network
+              4WARD DESIGN NETWORK <br /> 
+              Kigali, Rwanda
             </p>
-          </div>
-
-          {/* How to get to us Section */}
-          <div className="md:col-span-4 text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/40 mt-12 border-t border-[#e5e5e5] pt-12 pb-24">
-            How to get to us
-          </div>
-          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12 border-t border-[#e5e5e5] pt-12 pb-24 text-[#1a1a1a]">
-            <div>
-              <h3 className="text-[9px] font-black uppercase text-[#1a1a1a]/60 mb-3 tracking-widest">
-                Parking facilities
-              </h3>
-              <p className="text-[13px] font-bold leading-relaxed uppercase whitespace-pre-line">
-                {data.parking}
-              </p>
-            </div>
-            <div>
-              <h3 className="text-[9px] font-black uppercase text-[#1a1a1a]/60 mb-3 tracking-widest">
-                Public Transport
-              </h3>
-              <p className="text-[13px] font-bold leading-relaxed uppercase whitespace-pre-line">
-                {data.transport}
-              </p>
-            </div>
           </div>
         </div>
       </div>
