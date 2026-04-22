@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { projects, Project } from "../lib/projects";
 
 type DropdownItem = { label: string; href: string };
 type NavItem = { label: string; href: string; dropdown?: DropdownItem[] };
@@ -28,15 +29,22 @@ const navItems: NavItem[] = [
             { label: "DEV & TECH", href: "#dev" },
         ],
     },
+    { label: "PRICING", href: "/pricing" },
     { label: "MEET THE TEAM", href: "/team" },
     { label: "CONTACT", href: "/contact" },
 ];
 
 export default function Navbar() {
+    const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+    const isMinimalPage = pathname === '/minimal';
+
     const [scrolled, setScrolled] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [isSearching, setIsSearching] = useState(false);
+    const [searchResults, setSearchResults] = useState<{ projects: Project[], services: string[], fastAnswer?: string } | null>(null);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -52,6 +60,58 @@ export default function Navbar() {
     const leave = () => {
         timeoutRef.current = setTimeout(() => setActiveDropdown(null), 160);
     };
+
+    const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && searchQuery.trim()) {
+            setIsSearching(true);
+            setSearchResults(null);
+            
+            // Simulate AI/System search delay
+            setTimeout(() => {
+                const query = searchQuery.toLowerCase();
+                
+                // Filter Projects
+                const filteredProjects = projects.filter(p => 
+                    p.name.toLowerCase().includes(query) || 
+                    p.category.toLowerCase().includes(query) ||
+                    p.techStack.some(t => t.toLowerCase().includes(query)) ||
+                    p.overview.toLowerCase().includes(query)
+                );
+
+                // Filter Services
+                const allServices = ["Branding", "Video Production", "3D Modeling", "Software Development", "Motion Graphics", "UI/UX Design"];
+                const filteredServices = allServices.filter(s => s.toLowerCase().includes(query));
+
+                // Direct Answers (Agency FAQ)
+                const fastAnswers: { [key: string]: string } = {
+                    "location": "Our primary headquarters are based in Kigali, Rwanda (Kicukiro District), with regional offices in Rubavu, Musanze, and Huye.",
+                    "who are you": "4WARD is a Rwandan-rooted multi-disciplinary design and technology network specializing in premium branding, high-end video production, and custom software infrastructure.",
+                    "contact": "You can reach our team directly at connect@4ward.tech or visit our Contact page to initialize a briefing session in Kigali.",
+                    "team": "Our team consists of specialized Rwandan and international leads in product strategy, 3D architecture, full-stack engineering, and cinematic production.",
+                    "services": "We provide Branding Identity, Video Making, 3D Modeling & Interactive experiences, and Software Development.",
+                    "pricing": "We offer flexible plans starting from $1999 for Landing Pages and custom Product Partnerships. Visit our Pricing page for a full breakdown of our services.",
+                    "vision": "Bridging the gap between Rwandan artistic vision, motion, and global technical infrastructure."
+                };
+
+                let bestAnswer = "";
+                for (const key in fastAnswers) {
+                    if (query.includes(key)) {
+                        bestAnswer = fastAnswers[key];
+                        break;
+                    }
+                }
+
+                setSearchResults({
+                    projects: filteredProjects,
+                    services: filteredServices,
+                    fastAnswer: bestAnswer
+                });
+                setIsSearching(false);
+            }, 800);
+        }
+    };
+
+    if (isMinimalPage) return null;
 
     return (
         <>
@@ -73,29 +133,21 @@ export default function Navbar() {
                     {/* ── Logo ── */}
                     <Link
                         href="/"
-                        className="flex items-center gap-1.5 pr-4 border-r border-[#e5e5e5] mr-1 group"
+                        className="flex items-center gap-1 pr-4 border-r border-[#e5e5e5] mr-1 group"
                     >
-                        {/* Tiny logomark: square with red dot */}
-                        <span className="relative w-5 h-5 border-[1.5px] border-[#1a1a1a] group-hover:border-[#d32f2f] transition-colors duration-200 shrink-0 flex items-center justify-center">
-                            <span className="w-1.5 h-1.5 bg-[#d32f2f] absolute top-[2px] left-[2px]" />
-                            <span className="w-[3px] h-[3px] bg-[#1a1a1a] absolute bottom-[2px] right-[2px]" />
-                        </span>
-
-                        {/* "4WARD" text — W and R red, rest black */}
-                        <span className="font-black text-[11px] tracking-tight uppercase leading-none select-none">
-                            {"4WARD".split("").map((char, i) => (
-                                <span
-                                    key={i}
-                                    className={
-                                        char === "W" || char === "R"
-                                            ? "text-[#d32f2f]"
-                                            : "text-[#1a1a1a]"
-                                    }
-                                >
-                                    {char}
-                                </span>
-                            ))}
-                        </span>
+                        {/* Custom SVG Logo Recreation */}
+                        <svg width="80" height="20" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-300 group-hover:scale-105">
+                            {/* Stylized '4' */}
+                            <path d="M5 18L18 4H24L12 18H5Z" fill="#1a1a1a" />
+                            <path d="M16 4H26L30 18H20L16 4Z" fill="#1a1a1a" />
+                            <path d="M10 14H30V17H10V14Z" fill="#1a1a1a" />
+                            
+                            {/* Signature Red Slash */}
+                            <path d="M8 22L32 4L36 6L14 26L8 22Z" fill="#d32f2f" />
+                            
+                            {/* 'WARD' Typography */}
+                            <text x="35" y="19" fill="#1a1a1a" style={{ font: "900 15.5px Jost", letterSpacing: "-0.04em", textTransform: "uppercase" }}>WARD</text>
+                        </svg>
                     </Link>
 
                     {/* ── Desktop nav links ── */}
@@ -295,6 +347,12 @@ export default function Navbar() {
                                     type="text"
                                     autoFocus
                                     placeholder="DISCOVER"
+                                    value={searchQuery}
+                                    onChange={(e) => {
+                                        setSearchQuery(e.target.value);
+                                        if (!e.target.value) setSearchResults(null);
+                                    }}
+                                    onKeyDown={handleSearch}
                                     initial={{ rotateX: 20, scale: 0.95, opacity: 0 }}
                                     animate={{ rotateX: 0, scale: 1, opacity: 1 }}
                                     transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -313,16 +371,75 @@ export default function Navbar() {
                                 `}} />
                             </div>
                             
-                            <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5, duration: 0.8 }}
-                                className="mt-16 md:mt-24 text-[10px] sm:text-[12px] font-black uppercase tracking-widest text-[#1a1a1a]/30 flex items-center gap-3 md:gap-5"
-                            >
-                                <span>Press</span>
-                                <span className="px-4 py-2 border-2 border-[#1a1a1a]/20 rounded-md text-[#d32f2f]">Enter</span>
-                                <span>to search</span>
-                            </motion.div>
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5, duration: 0.8 }}
+                                    className="mt-16 md:mt-24 text-[10px] sm:text-[12px] font-black uppercase tracking-widest text-[#1a1a1a]/30 flex flex-col items-center gap-6"
+                                >
+                                    {isSearching ? (
+                                        <div className="flex items-center gap-3">
+                                            <span className="w-2 h-2 rounded-full bg-[#d32f2f] animate-ping" />
+                                            <span className="text-[#d32f2f]">Querying Project Index...</span>
+                                        </div>
+                                    ) : searchResults ? (
+                                        <div className="w-full max-w-4xl px-4 animate-fade-in">
+                                            <div className="flex flex-col gap-8 text-left">
+                                                {/* Fast Answer Section */}
+                                                {searchResults.fastAnswer && (
+                                                    <motion.div 
+                                                        initial={{ opacity: 0, x: -20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        className="p-6 bg-[#d32f2f]/5 border-l-4 border-[#d32f2f]"
+                                                    >
+                                                        <span className="text-[8px] font-black uppercase tracking-widest text-[#d32f2f] mb-2 block">System Response:</span>
+                                                        <p className="text-sm md:text-md font-bold text-[#1a1a1a] leading-tight max-w-2xl">{searchResults.fastAnswer}</p>
+                                                    </motion.div>
+                                                )}
+
+                                                <div className="flex flex-col md:flex-row gap-8 justify-between">
+                                                    {/* Projects Results */}
+                                                    <div className="flex-1">
+                                                        <h4 className="text-[10px] text-[#d32f2f] mb-4 border-b border-[#d32f2f]/20 pb-2 uppercase tracking-widest font-black">Matched Projects ({searchResults.projects.length})</h4>
+                                                        <div className="space-y-4">
+                                                            {searchResults.projects.length > 0 ? searchResults.projects.map(p => (
+                                                                <Link key={p.id} href={`/work/${p.slug}`} onClick={() => setSearchOpen(false)} className="block group">
+                                                                    <div className="flex justify-between items-end border-b border-[#1a1a1a]/5 pb-2 group-hover:border-[#d32f2f]/40 transition-colors">
+                                                                        <span className="text-sm font-black text-[#1a1a1a] group-hover:text-[#d32f2f] transition-colors">{p.name}</span>
+                                                                        <span className="text-[8px] opacity-40 uppercase tracking-widest font-bold">{p.category}</span>
+                                                                    </div>
+                                                                </Link>
+                                                            )) : (
+                                                                <span className="text-[10px] opacity-30 italic whitespace-nowrap">NO PROJECTS INDEXED FOR THIS QUERY</span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Services Results */}
+                                                    <div className="flex-1 md:max-w-[250px]">
+                                                        <h4 className="text-[10px] text-[#d32f2f] mb-4 border-b border-[#d32f2f]/20 pb-2 uppercase tracking-widest font-black">Capabilities</h4>
+                                                        <div className="space-y-2">
+                                                            {searchResults.services.length > 0 ? searchResults.services.map(s => (
+                                                                <div key={s} className="flex items-center gap-2">
+                                                                    <div className="w-1.5 h-1.5 bg-[#d32f2f]" />
+                                                                    <span className="text-[10px] font-black tracking-widest uppercase text-[#1a1a1a]/70">{s}</span>
+                                                                </div>
+                                                            )) : (
+                                                                <span className="text-[10px] opacity-30 italic">NO CORE CAPABILITIES MATCHED</span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-3 md:gap-5">
+                                            <span>Press</span>
+                                            <span className="px-4 py-2 border-2 border-[#1a1a1a]/20 rounded-md text-[#d32f2f]">Enter</span>
+                                            <span>to search</span>
+                                        </div>
+                                    )}
+                                </motion.div>
                         </div>
 
                         {/* Bottom Footer Elements */}
