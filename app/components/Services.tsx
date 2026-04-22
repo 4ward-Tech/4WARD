@@ -3,56 +3,20 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const services = [
-    {
-        number: "01",
-        title: "Branding",
-        description: "Crafting cohesive visual identities — logos, typography, and guidelines that make a lasting impression.",
-        accentColor: "#d32f2f",
-    },
-    {
-        number: "02",
-        title: "Video Making",
-        description: "Full-cycle production: cinematic storytelling, motion graphics, and post-production that captivates.",
-        accentColor: "#1a1a1a",
-    },
-    {
-        number: "03",
-        title: "3D & Interactive",
-        description: "Immersive 3D assets, product visualisations, and interactive web experiences with real-time rendering.",
-        accentColor: "#d32f2f",
-    },
-    {
-        number: "04",
-        title: "Photography",
-        description: "Editorial, commercial, and event photography expertly composed with light-precise imagery.",
-        accentColor: "#1a1a1a",
-    },
-    {
-        number: "05",
-        title: "Development",
-        description: "Scalable apps — clean architecture, modern frameworks, and pixel-perfect interfaces.",
-        accentColor: "#d32f2f",
-    },
-    {
-        number: "06",
-        title: "Color Grading",
-        description: "Professional grading that sets the mood, consistency, and cinematic tone for your visuals.",
-        accentColor: "#1a1a1a",
-    },
-];
+import { Service } from "@prisma/client";
 
-/* Inline SVG icons */
-const ServiceIcons: React.ReactNode[] = [
-    <svg key="01" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /><line x1="2" y1="12" x2="22" y2="12" /></svg>,
-    <svg key="02" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>,
-    <svg key="03" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>,
-    <svg key="04" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" /></svg>,
-    <svg key="05" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>,
-    <svg key="06" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="10.5" r="2.5" /><circle cx="8.5" cy="7.5" r="2.5" /><circle cx="6.5" cy="12.5" r="2.5" /><path d="M12 22c-4.97 0-9-2.69-9-6 0-1.5 1.34-2.87 3.5-3.84" /></svg>,
-];
+/* Mapping icon names to SVG components */
+const IconMap: Record<string, React.ReactNode> = {
+    brand: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /><line x1="2" y1="12" x2="22" y2="12" /></svg>,
+    video: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>,
+    motion: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>,
+    camera: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" /></svg>,
+    dev: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>,
+    color: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="10.5" r="2.5" /><circle cx="8.5" cy="7.5" r="2.5" /><circle cx="6.5" cy="12.5" r="2.5" /><path d="M12 22c-4.97 0-9-2.69-9-6 0-1.5 1.34-2.87 3.5-3.84" /></svg>,
+};
 
-export default function Services() {
+export default function Services({ initialServices }: { initialServices: Service[] }) {
+    const services = initialServices;
     const row1 = services.slice(0, 3);
     const row2 = services.slice(3, 6);
 
@@ -125,8 +89,8 @@ export default function Services() {
                     {/* Row 1: 01 - 02 - 03 */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0">
                         {row1.map((svc, i) => (
-                            <div key={svc.number} className="flex justify-center">
-                                <ServiceCard svc={svc} icon={ServiceIcons[i]} index={i} />
+                            <div key={svc.id} className="flex justify-center">
+                                <ServiceCard svc={svc} icon={IconMap[svc.iconName] || IconMap.brand} index={i} />
                             </div>
                         ))}
                     </div>
@@ -134,12 +98,14 @@ export default function Services() {
                     {/* Row 2: 06 - 05 - 04 (Snake visual order) */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0">
                         {[row2[2], row2[1], row2[0]].map((svc, i) => (
-                            <div key={svc.number} className="flex justify-center">
-                                <ServiceCard 
-                                    svc={svc} 
-                                    icon={ServiceIcons[parseInt(svc.number) - 1]} 
-                                    index={parseInt(svc.number) - 1} 
-                                />
+                            <div key={svc?.id} className="flex justify-center">
+                                {svc && (
+                                    <ServiceCard 
+                                        svc={svc} 
+                                        icon={IconMap[svc.iconName] || IconMap.brand} 
+                                        index={i} 
+                                    />
+                                )}
                             </div>
                         ))}
                     </div>
@@ -155,7 +121,7 @@ export default function Services() {
     );
 }
 
-function ServiceCard({ svc, icon, index }: { svc: typeof services[0]; icon: React.ReactNode; index: number }) {
+function ServiceCard({ svc, icon, index }: { svc: Service; icon: React.ReactNode; index: number }) {
     return (
         <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
@@ -168,7 +134,7 @@ function ServiceCard({ svc, icon, index }: { svc: typeof services[0]; icon: Reac
             
             <div className="flex justify-between items-center mb-5">
                 <span className="text-[10px] font-black text-[#1a1a1a]/20 group-hover:text-[#d32f2f] transition-colors tabular-nums uppercase tracking-widest">
-                    {svc.number}
+                    {svc.order.toString().padStart(2, '0')}
                 </span>
                 <div className="text-[#1a1a1a]/40 group-hover:text-[#1a1a1a] transition-all transform group-hover:scale-110">
                     {icon}

@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding database...");
 
-  // 1. Clear existing data to avoid duplicates
+  // 1. Clear existing data
   await prisma.testimonial.deleteMany();
   await prisma.processStep.deleteMany();
   await prisma.project.deleteMany();
@@ -13,60 +13,16 @@ async function main() {
 
   // 2. Seed Services
   const services = [
-    {
-      number: "01",
-      title: "Branding",
-      description: "Crafting cohesive visual identities — logos, typography, and guidelines that make a lasting impression.",
-      accentColor: "#d32f2f",
-      iconName: "brand",
-    },
-    {
-      number: "02",
-      title: "Video Making",
-      description: "Full-cycle production: cinematic storytelling, motion graphics, and post-production that captivates.",
-      accentColor: "#1a1a1a",
-      iconName: "video",
-    },
-    {
-      number: "03",
-      title: "3D & Interactive",
-      description: "Immersive 3D assets, product visualisations, and interactive web experiences with real-time rendering.",
-      accentColor: "#d32f2f",
-      iconName: "motion",
-    },
-    {
-      number: "04",
-      title: "Photography",
-      description: "Editorial, commercial, and event photography expertly composed with light-precise imagery.",
-      accentColor: "#1a1a1a",
-      iconName: "camera",
-    },
-    {
-      number: "05",
-      title: "Development",
-      description: "Scalable apps — clean architecture, modern frameworks, and pixel-perfect interfaces.",
-      accentColor: "#d32f2f",
-      iconName: "dev",
-    },
-    {
-      number: "06",
-      title: "Color Grading",
-      description: "Professional grading that sets the mood, consistency, and cinematic tone for your visuals.",
-      accentColor: "#1a1a1a",
-      iconName: "color",
-    },
+    { order: 1, title: "Branding", description: "Crafting cohesive visual identities — logos, typography, and guidelines that make a lasting impression.", accentColor: "#d32f2f", iconName: "brand" },
+    { order: 2, title: "Video Making", description: "Full-cycle production: cinematic storytelling, motion graphics, and post-production that captivates.", accentColor: "#1a1a1a", iconName: "video" },
+    { order: 3, title: "3D & Interactive", description: "Immersive 3D assets, product visualisations, and interactive web experiences with real-time rendering.", accentColor: "#d32f2f", iconName: "motion" },
+    { order: 4, title: "Photography", description: "Editorial, commercial, and event photography expertly composed with light-precise imagery.", accentColor: "#1a1a1a", iconName: "camera" },
+    { order: 5, title: "Development", description: "Scalable apps — clean architecture, modern frameworks, and pixel-perfect interfaces.", accentColor: "#d32f2f", iconName: "dev" },
+    { order: 6, title: "Color Grading", description: "Professional grading that sets the mood, consistency, and cinematic tone for your visuals.", accentColor: "#1a1a1a", iconName: "color" },
   ];
 
-  for (const [index, svc] of services.entries()) {
-    await prisma.service.create({
-      data: {
-        order: index + 1,
-        title: svc.title,
-        description: svc.description,
-        iconName: svc.iconName,
-        accentColor: svc.accentColor,
-      },
-    });
+  for (const svc of services) {
+    await prisma.service.create({ data: svc });
   }
 
   // 3. Seed Projects
@@ -117,25 +73,75 @@ async function main() {
   ];
 
   for (const project of projects) {
-    await prisma.project.create({
-      data: project,
-    });
+    await prisma.project.create({ data: project });
   }
 
   // 4. Seed Process Workflow
   const steps = [
-    { order: 1, title: "Discovery", description: "Deep dive into your brand and goals." },
-    { order: 2, title: "Strategy", description: "Mapping out the technical and creative path." },
-    { order: 3, title: "Design", description: "Crafting the visual and interactive experience." },
-    { order: 4, title: "Development", description: "Building robust, scalable infrastructure." },
-    { order: 5, title: "Launch", description: "Deployment and performance optimization." },
+    {
+      order: 1,
+      phase: "EXPLORATION PHASE",
+      duration: "1 WEEK",
+      title: "Discovery",
+      description: "Initial exploration to find the best solution.",
+      details: [
+        { label: "PROBLEM SPACE", icon: "P", iconColor: "#d32f2f", items: ["Define problem & success metrics."] },
+        { label: "FEEDBACK", icon: "F", iconColor: "#1a1a1a", items: ["Brainstorm audience needs."] }
+      ]
+    },
+    {
+      order: 2,
+      phase: "REFINEMENT PHASE",
+      duration: "1-2 WEEKS",
+      title: "Design",
+      description: "Executing core creative design concepts.",
+      details: [
+        { label: "DESIGNING MOCKS", icon: "D", iconColor: "#d32f2f", items: ["Iteration on visual concepts."] }
+      ]
+    },
+    {
+      order: 3,
+      phase: "REFINEMENT PHASE",
+      duration: "1-2 WEEKS",
+      title: "Approval",
+      description: "Stakeholder review and final direction.",
+      details: [
+        { label: "SOLIDIFY DIRECTION", icon: "S", iconColor: "#1a1a1a", items: ["Stakeholder feedback loop."] }
+      ]
+    },
+    {
+      order: 4,
+      phase: "DEVELOPMENT PHASE",
+      duration: "2 WEEKS",
+      title: "Build",
+      description: "Handoff and implementation support.",
+      details: [
+        { label: "ASSET DELIVERY", icon: "E", iconColor: "#1a1a1a", items: ["Polished assets delivery."] }
+      ]
+    }
   ];
 
   for (const step of steps) {
     await prisma.processStep.create({
-      data: step,
+      data: {
+        order: step.order,
+        phase: step.phase,
+        duration: step.duration,
+        title: step.title,
+        description: step.description,
+        details: step.details,
+      }
     });
   }
+
+  // 5. Seed Testimonials
+  await prisma.testimonial.create({
+    data: {
+      name: "Jeremy",
+      role: "Manager",
+      feedback: "They exceeded my expectations! We commissioned them to design and build a sustainable platform for our project, and the result was amazing. They implemented advanced technology and created a beautiful interface.",
+    }
+  });
 
   console.log("✅ Seeding complete!");
 }

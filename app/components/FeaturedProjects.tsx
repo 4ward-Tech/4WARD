@@ -3,13 +3,14 @@
 import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { projects } from "../lib/projects";
+import { Project } from "@prisma/client";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stage, useGLTF, PerspectiveCamera } from "@react-three/drei";
 
-export default function FeaturedProjects() {
+export default function FeaturedProjects({ initialProjects }: { initialProjects: Project[] }) {
+    const projects = initialProjects;
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0); // -1 for left, 1 for right
     const project = projects[currentIndex];

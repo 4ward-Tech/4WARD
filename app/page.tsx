@@ -2,7 +2,21 @@ import Image from "next/image";
 import Services from "./components/Services";
 import FeaturedProjects from "./components/FeaturedProjects";
 import ProcessWorkflow from "./components/ProcessWorkflow";
-export default function Home() {
+import { prisma } from "./lib/prisma";
+
+export default async function Home() {
+  const services = await prisma.service.findMany({
+    orderBy: { order: "asc" }
+  });
+
+  const featuredProjects = await prisma.project.findMany({
+    where: { isFeatured: true },
+    orderBy: { year: "desc" }
+  });
+
+  const processSteps = await prisma.processStep.findMany({
+    orderBy: { order: "asc" }
+  });
   return (
     <main className="relative min-h-screen w-full bg-[#f8f8f8] grid-bg font-jost text-[#1a1a1a] overflow-x-hidden">
       <div className="relative z-10 py-12 pr-12 pl-20 md:py-24 md:pr-24 md:pl-40 min-h-screen flex flex-col justify-between">
@@ -152,9 +166,9 @@ export default function Home() {
         </div>
       </div>
 
-      <Services />
-      <FeaturedProjects />
-      <ProcessWorkflow />
+      <Services initialServices={services} />
+      <FeaturedProjects initialProjects={featuredProjects} />
+      <ProcessWorkflow initialSteps={processSteps} />
     </main>
   );
 }

@@ -50,4 +50,7 @@ model ProcessStep {
   order        Int
   title        String
   description  String
+  phase        String?  // e.g., "EXPLORATION PHASE"
+  duration     String?  // e.g., "1 WEEK"
+  details      Json?    // For the nested labels and items
 }
