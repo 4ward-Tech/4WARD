@@ -4,11 +4,50 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id           String   @id @default(cuid())
+  order        Int
+  title        String
+  description  String
+  iconName     String
+  accentColor  String
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  subtitle     String
+  overview     String   // Short summary for cards
+  description  String   // Long description for case studies
+  year         Int
+  category     String   // e.g., "IoT / AI"
+  deviceType   String   @default("phone") // "phone" or "laptop"
+  accentColor  String
+  image        String   // Mockup image
+  modelPath    String?  // Optional 3D model
+  techStack    String[]
+  isFeatured   Boolean  @default(false)
+}
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  name         String
+  role         String
+  feedback     String
+  image        String?
+}
+
+model ProcessStep {
+  id           String   @id @default(cuid())
+  order        Int
+  title        String
+  description  String
 }
